@@ -220,7 +220,7 @@ LOCALE_PATHS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Asia/Kolkata"
+TIME_ZONE = "Africa/Lagos"
 
 USE_I18N = True
 

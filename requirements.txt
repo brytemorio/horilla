@@ -20,6 +20,7 @@ django-haystack
 django-import-export
 django-jsonfield
 django-mathfilters
+django-tenants
 django-model-utils
 django-simple-history
 django-widget-tweaks

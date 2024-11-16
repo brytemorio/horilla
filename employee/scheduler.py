@@ -1,4 +1,5 @@
 import datetime
+import os
 from datetime import timedelta
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -131,7 +132,8 @@ def block_unblock_disciplinary():
     return
 
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(update_experience, "interval", hours=4)
-scheduler.add_job(block_unblock_disciplinary, "interval", seconds=25)
-scheduler.start()
+if os.getenv("RUN_MAIN") == "true":
+    scheduler = BackgroundScheduler()
+    scheduler.add_job(update_experience, "interval", hours=4)
+    scheduler.add_job(block_unblock_disciplinary, "interval", seconds=25)
+    scheduler.start()

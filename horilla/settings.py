@@ -17,6 +17,7 @@ from pathlib import Path
 import environ
 from django.contrib.messages import constants as messages
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,11 +45,16 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Application definition
+DATABASE_ROUTERS = ["django_tenants.routers.TenantSyncRouter"]
+SHARED_APPS = [
+    "django_tenants",
+    "tenancy",
+]
 
-INSTALLED_APPS = [
+TENANT_APPS = [
+    "django.contrib.contenttypes",
     "django.contrib.admin",
     "django.contrib.auth",
-    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -57,7 +63,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "simple_history",
     "django_filters",
-    "base",
+    "base",  # base here
     "employee",
     "recruitment",
     "leave",
@@ -69,12 +75,21 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "django_apscheduler",
 ]
+
+INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+
+TENANT_MODEL = "tenancy.BaseTenantModel"
+TENANT_DOMAIN_MODEL = "tenancy.Domain"
+TENANT_SUBFOLDER_PREFIX = "tenants"
+
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
-
 MIDDLEWARE = [
+    # "django_tenants.middleware.main.TenantMainMiddleware",
+    "django_tenants.middleware.TenantSubfolderMiddleware"
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -99,8 +114,8 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
+                "django.template.context_processors.debug",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -109,7 +124,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "horilla.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -154,7 +168,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -174,7 +187,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 MESSAGE_TAGS = {
     messages.DEBUG: "oh-alert--warning",
     messages.INFO: "oh-alert--info",
@@ -183,14 +195,11 @@ MESSAGE_TAGS = {
     messages.ERROR: "oh-alert--danger",
 }
 
-
 CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS")
 
 LOGIN_URL = "/login"
 
-
 SIMPLE_HISTORY_REVERT_DISABLED = True
-
 
 DJANGO_NOTIFICATIONS_CONFIG = {
     "USE_JSONFIELD": True,
@@ -213,7 +222,6 @@ LANGUAGES = (
 LOCALE_PATHS = [
     join(BASE_DIR, "horilla", "locale"),
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/

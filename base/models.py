@@ -25,6 +25,8 @@ from horilla.methods import get_horilla_model_class
 from horilla.models import HorillaModel
 from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
 
+
+
 # Create your models here.
 WEEKS = [
     ("0", _("First Week")),
@@ -66,6 +68,9 @@ def clear_messages(request):
     storage = messages.get_messages(request)
     for message in storage:
         pass
+
+
+
 
 
 class Company(HorillaModel):
@@ -399,6 +404,7 @@ class RotatingWorkTypeAssign(HorillaModel):
     )
     history = HorillaAuditLog(
         related_name="history_set",
+
         bases=[
             HorillaAuditInfo,
         ],

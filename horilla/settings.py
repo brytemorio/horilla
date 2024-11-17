@@ -45,16 +45,10 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Application definition
-DATABASE_ROUTERS = ["django_tenants.routers.TenantSyncRouter"]
-SHARED_APPS = [
-    "django_tenants",
-    "tenancy",
-]
-
-TENANT_APPS = [
-    "django.contrib.contenttypes",
+INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
@@ -63,7 +57,7 @@ TENANT_APPS = [
     "corsheaders",
     "simple_history",
     "django_filters",
-    "base",  # base here
+    "base",
     "employee",
     "recruitment",
     "leave",
@@ -73,23 +67,14 @@ TENANT_APPS = [
     "attendance",
     "payroll",
     "widget_tweaks",
-    "django_apscheduler",
 ]
 
-INSTALLED_APPS = SHARED_APPS + [app for app in TENANT_APPS if app not in SHARED_APPS]
-
-
-TENANT_MODEL = "tenancy.BaseTenantModel"
-TENANT_DOMAIN_MODEL = "tenancy.Domain"
-TENANT_SUBFOLDER_PREFIX = "tenants"
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
 MIDDLEWARE = [
-    # "django_tenants.middleware.main.TenantMainMiddleware",
-    "django_tenants.middleware.TenantSubfolderMiddleware"
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

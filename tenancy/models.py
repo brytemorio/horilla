@@ -7,6 +7,7 @@ from django_tenants.models import TenantMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from marshmallow import ValidationError
+
 import re
 
 # Create your models here.

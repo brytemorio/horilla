@@ -45,13 +45,22 @@ DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 
 # Application definition
-INSTALLED_APPS = [
+DATABASE_ROUTERS = "django_tenants.routers.TenantSyncRouter"
+TENANT_MODEL = "tenancy.BaseTenantModel"
+TENANT_DOMAIN_MODEL = "tenancy.Domain"
+
+SHARED_APPS = [
+    "django_tenants",
+    "tenancy",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]
+
+TENANT_APPS = [
     "notifications",
     "mathfilters",
     "corsheaders",
@@ -67,14 +76,28 @@ INSTALLED_APPS = [
     "attendance",
     "payroll",
     "widget_tweaks",
+    "accessibility",
+    "horilla_audit",
+    "horilla_widgets",
+    "horilla_crumbs",
+    "horilla_documents",
+    "haystack",
+    "horilla_views",
+    "horilla_automations",
+    "auditlog",
+    "biometric",
+    "helpdesk",
+    "offboarding",
 ]
 
+INSTALLED_APPS = SHARED_APPS + TENANT_APPS
 
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 
 APSCHEDULER_RUN_NOW_TIMEOUT = 25  # Seconds
 
 MIDDLEWARE = [
+    "django_tenants.middleware.main.TenantMainMiddleware"
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -109,6 +132,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "horilla.wsgi.application"
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

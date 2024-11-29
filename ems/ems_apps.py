@@ -7,18 +7,18 @@ This module is used to register ems addons
 from ems import settings
 from ems.settings import INSTALLED_APPS
 
-# INSTALLED_APPS.append("accessibility")
-# INSTALLED_APPS.append("ems_audit")
-# INSTALLED_APPS.append("ems_widgets")
-# INSTALLED_APPS.append("ems_crumbs")
-# INSTALLED_APPS.append("ems_documents")
-# INSTALLED_APPS.append("haystack")
-# INSTALLED_APPS.append("ems_views")
-# INSTALLED_APPS.append("ems_automations")
-# INSTALLED_APPS.append("auditlog")
-# INSTALLED_APPS.append("biometric")
-# INSTALLED_APPS.append("helpdesk")
-# INSTALLED_APPS.append("offboarding")
+INSTALLED_APPS.append("accessibility")
+INSTALLED_APPS.append("ems_audit")
+INSTALLED_APPS.append("ems_widgets")
+INSTALLED_APPS.append("ems_crumbs")
+INSTALLED_APPS.append("ems_documents")
+INSTALLED_APPS.append("haystack")
+INSTALLED_APPS.append("ems_views")
+INSTALLED_APPS.append("ems_automations")
+INSTALLED_APPS.append("auditlog")
+INSTALLED_APPS.append("biometric")
+INSTALLED_APPS.append("helpdesk")
+INSTALLED_APPS.append("offboarding")
 
 
 AUDITLOG_INCLUDE_ALL_MODELS = True

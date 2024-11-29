@@ -27,15 +27,15 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
     path("", include("base.urls")),
-    path("", include("horilla_automations.urls")),
-    path("", include("horilla_views.urls")),
+    path("", include("ems_automations.urls")),
+    path("", include("ems_views.urls")),
     path("employee/", include("employee.urls")),
-    path("horilla-widget/", include("horilla_widgets.urls")),
+    path("horilla-widget/", include("ems_widgets.urls")),
     re_path(
         "^inbox/notifications/", include(notifications.urls, namespace="notifications")
     ),
     path("i18n/", include("django.conf.urls.i18n")),
-    path("api/", include("horilla_api.urls")),
+    path("api/", include("ems_api.urls")),
 ]
 
 if settings.DEBUG:

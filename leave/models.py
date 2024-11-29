@@ -33,8 +33,8 @@ from employee.models import Employee, EmployeeWorkInformation
 from horilla import horilla_middlewares
 from horilla.methods import get_horilla_model_class
 from horilla.models import HorillaModel
-from horilla_audit.methods import get_diff
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_audit.methods import get_diff
+from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 from leave.methods import calculate_requested_days
 from leave.threading import LeaveClashThread
 

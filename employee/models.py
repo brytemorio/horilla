@@ -34,8 +34,8 @@ from employee.methods.duration_methods import format_time, strtime_seconds
 from horilla import horilla_middlewares
 from horilla.methods import get_horilla_model_class
 from horilla.models import HorillaModel
-from horilla_audit.methods import get_diff
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_audit.methods import get_diff
+from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 # create your model
 

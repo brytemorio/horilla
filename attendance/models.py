@@ -35,7 +35,7 @@ from base.models import Company, EmployeeShift, EmployeeShiftDay, Holidays, Work
 from employee.models import Employee
 from horilla.methods import get_horilla_model_class
 from horilla.models import HorillaModel
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 # to skip the migration issue with the old migrations
 _validate_time_in_minutes = validate_time_in_minutes

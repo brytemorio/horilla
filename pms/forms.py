@@ -26,8 +26,8 @@ from base.methods import (
 )
 from employee.filters import EmployeeFilter
 from horilla import horilla_middlewares
-from horilla_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
-from horilla_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
+from ems_widgets.widgets.select_widgets import HorillaMultiSelectWidget
 from pms.models import (
     AnonymousFeedback,
     BonusPointSetting,

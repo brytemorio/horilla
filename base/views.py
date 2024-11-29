@@ -168,8 +168,8 @@ from horilla.horilla_settings import (
     FILE_STORAGE,
 )
 from horilla.methods import get_horilla_model_class, remove_dynamic_url
-from horilla_audit.forms import HistoryTrackingFieldsForm
-from horilla_audit.models import AccountBlockUnblock, AuditTag, HistoryTrackingFields
+from ems_audit.forms import HistoryTrackingFieldsForm
+from ems_audit.models import AccountBlockUnblock, AuditTag, HistoryTrackingFields
 from notifications.models import Notification
 from notifications.signals import notify
 
@@ -945,7 +945,7 @@ def user_group_table(request):
         "payroll",
         "auth",
         "offboarding",
-        "horilla_documents",
+        "ems_documents",
         "helpdesk",
     ]
     form = UserGroupForm()
@@ -1026,7 +1026,7 @@ def user_group(request):
         "payroll",
         "auth",
         "offboarding",
-        "horilla_documents",
+        "ems_documents",
         "helpdesk",
     ]
     form = UserGroupForm()
@@ -1072,7 +1072,7 @@ def user_group_search(request):
         "payroll",
         "auth",
         "offboarding",
-        "horilla_documents",
+        "ems_documents",
         "helpdesk",
     ]
     form = UserGroupForm()
@@ -3132,7 +3132,7 @@ def employee_permission_assign(request):
         "payroll",
         "auth",
         "offboarding",
-        "horilla_documents",
+        "ems_documents",
         "helpdesk",
     ]
     installed_apps = [app for app in settings.INSTALLED_APPS if app in horilla_apps]
@@ -3187,7 +3187,7 @@ def employee_permission_search(request, codename=None, uid=None):
         "payroll",
         "auth",
         "offboarding",
-        "horilla_documents",
+        "ems_documents",
         "helpdesk",
     ]
     for app_name in apps:
@@ -3253,7 +3253,7 @@ def permission_table(request):
         "payroll",
         "auth",
         "offboarding",
-        "horilla_documents",
+        "ems_documents",
         "helpdesk",
     ]
     form = AssignPermission()
@@ -5301,7 +5301,7 @@ def rotating_work_type_select_filter(request):
 
 
 @login_required
-@permission_required("horilla_audit.view_audittag")
+@permission_required("ems_audit.view_audittag")
 def tag_view(request):
     """
     This method is used to show Audit tags
@@ -5377,7 +5377,7 @@ def tag_update(request, tag_id):
 
 @login_required
 @hx_request_required
-@permission_required("horilla_audit.add_audittag")
+@permission_required("ems_audit.add_audittag")
 def audit_tag_create(request):
     """
     This method renders form and template to create Ticket type
@@ -5401,7 +5401,7 @@ def audit_tag_create(request):
 
 @login_required
 @hx_request_required
-@permission_required("horilla_audit.change_audittag")
+@permission_required("ems_audit.change_audittag")
 def audit_tag_update(request, tag_id):
     """
     This method renders form and template to create Ticket type

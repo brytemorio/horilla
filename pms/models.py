@@ -16,10 +16,10 @@ from base.horilla_company_manager import HorillaCompanyManager
 from base.models import Company, Department, JobPosition
 from employee.models import BonusPoint, Employee
 from horilla.models import HorillaModel
-from horilla_audit.methods import get_diff
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
-from horilla_automations.methods.methods import get_model_class
-from horilla_views.cbv_methods import render_template
+from ems_audit.methods import get_diff
+from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_automations.methods.methods import get_model_class
+from ems_views.cbv_methods import render_template
 
 """Objectives and key result section"""
 

@@ -12,7 +12,7 @@ from django_filters.filterset import FILTER_FOR_DBFIELD_DEFAULTS
 
 from base.methods import reload_queryset
 from horilla.horilla_middlewares import _thread_locals
-from horilla_views.templatetags.generic_template_filters import getattribute
+from ems_views.templatetags.generic_template_filters import getattribute
 
 FILTER_FOR_DBFIELD_DEFAULTS[models.ForeignKey][
     "filter_class"

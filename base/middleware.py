@@ -69,7 +69,7 @@ class CompanyMiddleware:
                 "base",
                 "helpdesk",
                 "offboarding",
-                "horilla_documents",
+                "ems_documents",
             ]
             app_models = [
                 model

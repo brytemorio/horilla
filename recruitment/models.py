@@ -26,8 +26,8 @@ from base.horilla_company_manager import HorillaCompanyManager
 from base.models import Company, JobPosition
 from employee.models import Employee
 from horilla.models import HorillaModel
-from horilla_audit.methods import get_diff
-from horilla_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_audit.methods import get_diff
+from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 # Create your models here.
 

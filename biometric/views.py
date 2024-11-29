@@ -32,8 +32,8 @@ from ems.decorators import (
     login_required,
     permission_required,
 )
-from ems.filters import HorillaPaginator
-from ems.horilla_settings import BIO_DEVICE_THREADS
+from ems.filters import EmsPaginator
+from ems.ems_settings import BIO_DEVICE_THREADS
 
 from .cosec import COSECBiometric
 from .filters import BiometricDeviceFilter
@@ -64,7 +64,7 @@ def paginator_qry(qryset, page_number):
     """
     This method is used to paginate query set
     """
-    paginator = HorillaPaginator(qryset, get_pagination())
+    paginator = EmsPaginator(qryset, get_pagination())
     qryset = paginator.get_page(page_number)
     return qryset
 
@@ -1413,7 +1413,7 @@ def edit_cosec_user(request, user_id, device_id):
 @login_required
 @install_required
 @permission_required("biometric.delete_biometricemployees")
-def delete_horilla_cosec_user(request, user_id, device_id):
+def delete_ems_cosec_user(request, user_id, device_id):
     """
     View function to delete a user from a COSEC biometric device and database.
 

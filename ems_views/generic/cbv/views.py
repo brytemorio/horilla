@@ -21,7 +21,7 @@ from django.views.generic import DetailView, FormView, ListView, TemplateView
 from base.methods import closest_numbers, get_key_instances
 from ems.filters import FilterSet
 from ems.group_by import group_by_queryset
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 from ems_views import models
 from ems_views.cbv_methods import (
     get_short_uuid,
@@ -37,9 +37,9 @@ from ems_views.templatetags.generic_template_filters import getattribute
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaListView(ListView):
+class EmsListView(ListView):
     """
-    HorillaListView
+    EmsListView
     """
 
     filter_class: FilterSet = None
@@ -48,7 +48,7 @@ class HorillaListView(ListView):
 
     export_file_name: str = None
 
-    template_name: str = "generic/horilla_list_table.html"
+    template_name: str = "generic/ems_list_table.html"
     context_object_name = "queryset"
     # column = [("Verbose Name","field_name","avatar_mapping")], opt: avatar_mapping
     columns: list = []
@@ -106,7 +106,7 @@ class HorillaListView(ListView):
 
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        update_initial_cache(request, CACHE, HorillaListView)
+        update_initial_cache(request, CACHE, EmsListView)
 
         # hidden columns configuration
         existing_instance = models.ToggleColumn.objects.filter(
@@ -349,7 +349,7 @@ class HorillaListView(ListView):
                 for instance in group["list"]:
                     instance.ordered_ids = ordered_ids
                     ordered_ids.append(instance.pk)
-        CACHE.get(self.request.session.session_key + "cbv")[HorillaListView] = context
+        CACHE.get(self.request.session.session_key + "cbv")[EmsListView] = context
         from ems.urls import path, urlpatterns
 
         self.export_path = f"export-list-view-{get_short_uuid(4)}/"
@@ -401,7 +401,7 @@ class HorillaListView(ListView):
 
         _model = self.model
 
-        class HorillaListViewResorce(resources.ModelResource):
+        class EmsListViewResorce(resources.ModelResource):
             """
             Instant Resource class
             """
@@ -442,7 +442,7 @@ class HorillaListView(ListView):
                 cleaned_text = "\n".join(non_blank_lines)
                 return cleaned_text
 
-        book_resource = HorillaListViewResorce()
+        book_resource = EmsListViewResorce()
 
         # Export the data using the resource
         dataset = book_resource.export(queryset)
@@ -458,16 +458,16 @@ class HorillaListView(ListView):
         return response
 
 
-class HorillaSectionView(TemplateView):
+class EmsSectionView(TemplateView):
     """
-    Horilla Template View
+    Ems Template View
     """
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        update_initial_cache(request, CACHE, HorillaListView)
+        update_initial_cache(request, CACHE, EmsListView)
 
     nav_url: str = ""
     view_url: str = ""
@@ -478,7 +478,7 @@ class HorillaSectionView(TemplateView):
     script_static_paths: list = []
     style_static_paths: list = []
 
-    template_name = "generic/horilla_section.html"
+    template_name = "generic/ems_section.html"
 
     def get_context_data(self, **kwargs) -> dict:
         context = super().get_context_data(**kwargs)
@@ -491,14 +491,14 @@ class HorillaSectionView(TemplateView):
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaDetailedView(DetailView):
+class EmsDetailedView(DetailView):
     """
     HorillDetailedView
     """
 
     title = "Detailed View"
-    template_name = "generic/horilla_detailed_view.html"
-    header: dict = {"title": "Horilla", "subtitle": "Horilla Detailed View"}
+    template_name = "generic/ems_detailed_view.html"
+    header: dict = {"title": "Ems", "subtitle": "Ems Detailed View"}
     body: list = []
 
     action_method: list = []
@@ -511,7 +511,7 @@ class HorillaDetailedView(DetailView):
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        update_initial_cache(request, CACHE, HorillaDetailedView)
+        update_initial_cache(request, CACHE, EmsDetailedView)
 
     def get_context_data(self, **kwargs: Any):
         context = super().get_context_data(**kwargs)
@@ -546,20 +546,20 @@ class HorillaDetailedView(DetailView):
         context["cols"] = self.cols
 
         CACHE.get(self.request.session.session_key + "cbv")[
-            HorillaDetailedView
+            EmsDetailedView
         ] = context
 
         return context
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaTabView(TemplateView):
+class EmsTabView(TemplateView):
     """
-    HorillaTabView
+    EmsTabView
     """
 
     view_id: str = get_short_uuid(3, "htv")
-    template_name = "generic/horilla_tabs.html"
+    template_name = "generic/ems_tabs.html"
 
     tabs: list = []
 
@@ -567,7 +567,7 @@ class HorillaTabView(TemplateView):
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        update_initial_cache(request, CACHE, HorillaTabView)
+        update_initial_cache(request, CACHE, EmsTabView)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -580,22 +580,22 @@ class HorillaTabView(TemplateView):
         context["tabs"] = self.tabs
         context["view_id"] = self.view_id
 
-        CACHE.get(self.request.session.session_key + "cbv")[HorillaTabView] = context
+        CACHE.get(self.request.session.session_key + "cbv")[EmsTabView] = context
 
         return context
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaCardView(ListView):
+class EmsCardView(ListView):
     """
-    HorillaCardView
+    EmsCardView
     """
 
     filter_class: FilterSet = None
 
     view_id: str = get_short_uuid(4, prefix="hcv")
 
-    template_name = "generic/horilla_card.html"
+    template_name = "generic/ems_card.html"
     context_object_name = "queryset"
 
     search_url: str = ""
@@ -633,7 +633,7 @@ class HorillaCardView(ListView):
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        update_initial_cache(request, CACHE, HorillaCardView)
+        update_initial_cache(request, CACHE, EmsCardView)
         self._saved_filters = QueryDict()
 
     def get_queryset(self):
@@ -706,7 +706,7 @@ class HorillaCardView(ListView):
                 instance.ordered_ids = ordered_ids
                 ordered_ids.append(instance.pk)
 
-        CACHE.get(self.request.session.session_key + "cbv")[HorillaCardView] = context
+        CACHE.get(self.request.session.session_key + "cbv")[EmsCardView] = context
         referrer = self.request.GET.get("referrer", "")
         if referrer:
             # Remove the protocol and domain part
@@ -761,9 +761,9 @@ def save(self: forms.ModelForm, commit=True, *args, **kwargs):
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaFormView(FormView):
+class EmsFormView(FormView):
     """
-    HorillaFormView
+    EmsFormView
     """
 
     class HttpResponse:
@@ -803,7 +803,7 @@ class HorillaFormView(FormView):
     view_id: str = get_short_uuid(4)
     hx_confirm: str = ""
     form_class: forms.ModelForm = None
-    template_name = "generic/horilla_form.html"
+    template_name = "generic/ems_form.html"
     ids_key: str = "instance_ids"
     form_disaply_attr: str = ""
     new_display_title: str = "Add New"
@@ -820,7 +820,7 @@ class HorillaFormView(FormView):
         self.request = request
         if not self.success_url:
             self.success_url = self.request.path
-        update_initial_cache(request, CACHE, HorillaFormView)
+        update_initial_cache(request, CACHE, EmsFormView)
 
         if self.form_class:
             setattr(self.form_class, "structured", structured)
@@ -974,20 +974,20 @@ class HorillaFormView(FormView):
                 self.form_class.verbose_name = self.new_display_title
             form.close_button_attrs = self.close_button_attrs
             form.submit_button_attrs = self.submit_button_attrs
-            CACHE.get(self.request.session.session_key + "cbv")[HorillaFormView] = form
+            CACHE.get(self.request.session.session_key + "cbv")[EmsFormView] = form
             self.form = form
         return self.form
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaNavView(TemplateView):
+class EmsNavView(TemplateView):
     """
-    HorillaNavView
+    EmsNavView
 
     filter form submit button id: applyFilter
     """
 
-    template_name = "generic/horilla_nav.html"
+    template_name = "generic/ems_nav.html"
 
     nav_title: str = ""
     search_url: str = ""
@@ -1007,7 +1007,7 @@ class HorillaNavView(TemplateView):
         super().__init__(**kwargs)
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        update_initial_cache(request, CACHE, HorillaNavView)
+        update_initial_cache(request, CACHE, EmsNavView)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1031,17 +1031,17 @@ class HorillaNavView(TemplateView):
         context["active_view"] = models.ActiveView.objects.filter(
             path=self.request.path
         ).first()
-        CACHE.get(self.request.session.session_key + "cbv")[HorillaNavView] = context
+        CACHE.get(self.request.session.session_key + "cbv")[EmsNavView] = context
         return context
 
 
 @method_decorator(hx_request_required, name="dispatch")
-class HorillaProfileView(DetailView):
+class EmsProfileView(DetailView):
     """
-    GenericHorillaProfileView
+    GenericEmsProfileView
     """
 
-    template_name = "generic/horilla_profile_view.html"
+    template_name = "generic/ems_profile_view.html"
     view_id: str = None
     filter_class: FilterSet = None
 
@@ -1061,7 +1061,7 @@ class HorillaProfileView(DetailView):
 
         request = getattr(_thread_locals, "request", None)
         self.request = request
-        update_initial_cache(request, CACHE, HorillaProfileView)
+        update_initial_cache(request, CACHE, EmsProfileView)
 
         from ems.urls import path, urlpatterns
 

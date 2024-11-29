@@ -3,13 +3,13 @@ import json
 from django.contrib.auth.models import User
 from django.db import models
 
-from ems.horilla_middlewares import _thread_locals
-from ems.models import HorillaModel
+from ems.ems_middlewares import _thread_locals
+from ems.models import EmsModel
 
 # Create your models here.
 
 
-class ToggleColumn(HorillaModel):
+class ToggleColumn(EmsModel):
     """
     ToggleColumn
     """
@@ -33,7 +33,7 @@ class ToggleColumn(HorillaModel):
         return str(self.user_id.employee_get)
 
 
-class ActiveTab(HorillaModel):
+class ActiveTab(EmsModel):
     """
     ActiveTab
     """
@@ -42,7 +42,7 @@ class ActiveTab(HorillaModel):
     tab_target = models.CharField(max_length=256)
 
 
-class ActiveGroup(HorillaModel):
+class ActiveGroup(EmsModel):
     """
     ActiveGroup
     """
@@ -52,7 +52,7 @@ class ActiveGroup(HorillaModel):
     group_by_field = models.CharField(max_length=256)
 
 
-class SavedFilter(HorillaModel):
+class SavedFilter(EmsModel):
     """
     SavedFilter
     """
@@ -75,7 +75,7 @@ class SavedFilter(HorillaModel):
         return str(self.title)
 
 
-class ActiveView(HorillaModel):
+class ActiveView(EmsModel):
     """
     This model to store the active view type for HNV
     """

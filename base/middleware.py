@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render
 
 from base.context_processors import AllCompany
-from base.horilla_company_manager import HorillaCompanyManager
+from base.ems_company_manager import EmsCompanyManager
 from base.models import Company
 
 
@@ -87,7 +87,7 @@ class CompanyMiddleware:
                             Q(company_id=company_id) | Q(company_id__isnull=True),
                         )
                     elif (
-                        isinstance(model.objects, HorillaCompanyManager)
+                        isinstance(model.objects, EmsCompanyManager)
                         and model.objects.related_company_field
                     ):
                         model.add_to_class(

@@ -7,12 +7,12 @@ from django.db.models.signals import post_delete, post_save
 from django.forms import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.ems_company_manager import EmsCompanyManager
 from base.models import Company, Department, JobPosition, Tags
 from employee.models import Employee
-from ems.models import HorillaModel
+from ems.models import EmsModel
 from ems_audit.methods import get_diff
-from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_audit.models import EmsAuditInfo, EmsAuditLog
 
 PRIORITY = [
     ("low", "Low"),
@@ -43,7 +43,7 @@ TICKET_STATUS = [
 ]
 
 
-class DepartmentManager(HorillaModel):
+class DepartmentManager(EmsModel):
     manager = models.ForeignKey(
         Employee,
         verbose_name="Manager",
@@ -69,20 +69,20 @@ class DepartmentManager(HorillaModel):
             raise ValidationError(_(f"This employee is not from {self.department} ."))
 
 
-class TicketType(HorillaModel):
+class TicketType(EmsModel):
     title = models.CharField(max_length=100, unique=True)
     type = models.CharField(choices=TICKET_TYPES, max_length=50)
     prefix = models.CharField(max_length=3, unique=True)
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = EmsCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.title
 
 
-class Ticket(HorillaModel):
+class Ticket(EmsModel):
 
     title = models.CharField(max_length=50)
     employee_id = models.ForeignKey(
@@ -105,13 +105,13 @@ class Ticket(HorillaModel):
     deadline = models.DateField(null=True, blank=True)
     tags = models.ManyToManyField(Tags, blank=True, related_name="ticket_tags")
     status = models.CharField(choices=TICKET_STATUS, default="new", max_length=50)
-    history = HorillaAuditLog(
+    history = EmsAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            EmsAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="employee_id__employee__work_info__company_id"
     )
 
@@ -155,7 +155,7 @@ class Ticket(HorillaModel):
         return get_diff(self)
 
 
-class ClaimRequest(HorillaModel):
+class ClaimRequest(EmsModel):
     ticket_id = models.ForeignKey(
         Ticket,
         on_delete=models.CASCADE,
@@ -185,7 +185,7 @@ class ClaimRequest(HorillaModel):
             raise ValidationError({"employee_id": _("This field is required.")})
 
 
-class Comment(HorillaModel):
+class Comment(EmsModel):
     comment = models.TextField(null=True, blank=True)
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE, related_name="comment")
     employee_id = models.ForeignKey(
@@ -197,7 +197,7 @@ class Comment(HorillaModel):
         return self.comment
 
 
-class Attachment(HorillaModel):
+class Attachment(EmsModel):
     file = models.FileField(upload_to="Tickets/Attachment")
     description = models.CharField(max_length=100, blank=True, null=True)
     format = models.CharField(max_length=50, blank=True, null=True)
@@ -236,7 +236,7 @@ class Attachment(HorillaModel):
         return os.path.basename(self.file.name)
 
 
-class FAQCategory(HorillaModel):
+class FAQCategory(EmsModel):
     title = models.CharField(max_length=30)
     description = models.TextField(blank=True, null=True, max_length=255)
 
@@ -244,7 +244,7 @@ class FAQCategory(HorillaModel):
         return self.title
 
 
-class FAQ(HorillaModel):
+class FAQ(EmsModel):
     question = models.CharField(max_length=255)
     answer = models.TextField(max_length=255)
     tags = models.ManyToManyField(Tags)
@@ -252,7 +252,7 @@ class FAQ(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = EmsCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.question

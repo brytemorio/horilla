@@ -1,4 +1,4 @@
-{% load i18n %}{% load horillafilters %}
+{% load i18n %}{% load emsfilters %}
 <div class="oh-modal__dialog-header">
     <h2 class="oh-modal__dialog-title" id="objectUpdateModalLabel">
         {% trans "Leave Request" %}
@@ -10,12 +10,12 @@
 </div>
 <div class="oh-modal__dialog-body">
     <form
-        hx-post="{% url 'request-update' id %}"
-        hx-encoding="multipart/form-data"
-        hx-target="#objectUpdateModalTarget"
-        id="leaveRequestUpdateForm"
+            hx-post="{% url 'request-update' id %}"
+            hx-encoding="multipart/form-data"
+            hx-target="#objectUpdateModalTarget"
+            id="leaveRequestUpdateForm"
     >
-        {% csrf_token %} {{form.as_p}}
+        {% csrf_token %} {{ form.as_p }}
     </form>
 </div>
 <script>

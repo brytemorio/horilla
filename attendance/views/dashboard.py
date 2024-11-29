@@ -36,7 +36,7 @@ from employee.models import Employee
 from employee.not_in_out_dashboard import paginator_qry
 from ems import settings
 from ems.decorators import hx_request_required, login_required
-from ems.methods import get_horilla_model_class
+from ems.methods import get_ems_model_class
 
 
 def find_on_time(request, today, week_day, department=None):
@@ -63,7 +63,7 @@ def find_expected_attendances(week_day):
     """
     employees = Employee.objects.filter(is_active=True)
     if apps.is_installed("leave"):
-        LeaveRequest = get_horilla_model_class(app_label="leave", model="leaverequest")
+        LeaveRequest = get_ems_model_class(app_label="leave", model="leaverequest")
         on_leave = LeaveRequest.objects.filter(status="Approved")
     else:
         on_leave = []

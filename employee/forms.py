@@ -48,7 +48,7 @@ from employee.models import (
     Policy,
     PolicyMultipleFile,
 )
-from ems import horilla_middlewares
+from ems import ems_middlewares
 from ems_audit.models import AccountBlockUnblock
 
 logger = logging.getLogger(__name__)
@@ -61,7 +61,7 @@ class ModelForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(ems_middlewares._thread_locals, "request", None)
         reload_queryset(self.fields)
         for _, field in self.fields.items():
             widget = field.widget

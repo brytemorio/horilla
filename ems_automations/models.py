@@ -2,8 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _trans
 
-from base.models import HorillaMailTemplate
-from ems.models import HorillaModel
+from base.models import EmsMailTemplate
+from ems.models import EmsModel
 from ems_views.cbv_methods import render_template
 
 MODEL_CHOICES = []
@@ -19,7 +19,7 @@ CONDITIONS = [
 ]
 
 
-class MailAutomation(HorillaModel):
+class MailAutomation(EmsModel):
     """
     MailAutoMation
     """
@@ -41,9 +41,9 @@ class MailAutomation(HorillaModel):
     trigger = models.CharField(max_length=10, choices=choices)
     # udpate the on_update logic to if and only if when
     # changes in the previous and current value
-    mail_template = models.ForeignKey(HorillaMailTemplate, on_delete=models.CASCADE)
+    mail_template = models.ForeignKey(EmsMailTemplate, on_delete=models.CASCADE)
     template_attachments = models.ManyToManyField(
-        HorillaMailTemplate,
+        EmsMailTemplate,
         related_name="template_attachment",
         blank=True,
     )

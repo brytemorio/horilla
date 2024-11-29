@@ -108,10 +108,10 @@ from ems.decorators import (
     owner_can_enter,
     permission_required,
 )
-from ems.filters import HorillaPaginator
+from ems.filters import EmsPaginator
 from ems.group_by import group_by_queryset
-from ems.horilla_settings import HORILLA_DATE_FORMATS
-from ems.methods import get_horilla_model_class
+from ems.ems_settings import EMS_DATE_FORMATS
+from ems.methods import get_ems_model_class
 from ems_audit.models import AccountBlockUnblock, HistoryTrackingFields
 from ems_documents.forms import (
     DocumentForm,
@@ -911,7 +911,7 @@ def paginator_qry(qryset, page_number):
     """
     This method is used to paginate query set
     """
-    paginator = HorillaPaginator(qryset, get_pagination())
+    paginator = EmsPaginator(qryset, get_pagination())
     qryset = paginator.get_page(page_number)
     return qryset
 
@@ -1965,7 +1965,7 @@ def replace_employee(request, emp_id):
                     and field_name == "recruitment_managers"
                     and str(emp_id) != replace_emp_id
                 ):
-                    Recruitment = get_horilla_model_class(
+                    Recruitment = get_ems_model_class(
                         app_label="recruitment", model="recruitment"
                     )
                     recruitment_query = Recruitment.objects.filter(
@@ -1980,7 +1980,7 @@ def replace_employee(request, emp_id):
                     and field_name == "recruitment_stage_managers"
                     and str(emp_id) != replace_emp_id
                 ):
-                    Stage = get_horilla_model_class(
+                    Stage = get_ems_model_class(
                         app_label="recruitment", model="stage"
                     )
                     recruitment_stage_query = Stage.objects.filter(
@@ -1995,7 +1995,7 @@ def replace_employee(request, emp_id):
                     and field_name == "onboarding_stage_manager"
                     and str(emp_id) != replace_emp_id
                 ):
-                    OnboardingStage = get_horilla_model_class(
+                    OnboardingStage = get_ems_model_class(
                         app_label="onboarding", model="onboardingstage"
                     )
                     onboarding_stage_query = OnboardingStage.objects.filter(
@@ -2010,7 +2010,7 @@ def replace_employee(request, emp_id):
                     and field_name == "onboarding_task_manager"
                     and str(emp_id) != replace_emp_id
                 ):
-                    OnboardingTask = get_horilla_model_class(
+                    OnboardingTask = get_ems_model_class(
                         app_label="onboarding", model="onboardingtask"
                     )
                     onboarding_task_query = OnboardingTask.objects.filter(
@@ -2662,7 +2662,7 @@ def work_info_export(request):
                 start_date = datetime.strptime(str(value), "%Y-%m-%d").date()
 
                 # Print the formatted date for each format
-                for format_name, format_string in HORILLA_DATE_FORMATS.items():
+                for format_name, format_string in EMS_DATE_FORMATS.items():
                     if format_name == date_format:
                         data = start_date.strftime(format_string)
 
@@ -2860,7 +2860,7 @@ def dashboard_employee_tiles(request):
     data["total_employees"] = Employee.objects.filter(is_active=True).count()
     # # filtering newbies
     if apps.is_installed("recruitment"):
-        Candidate = get_horilla_model_class(app_label="recruitment", model="candidate")
+        Candidate = get_ems_model_class(app_label="recruitment", model="candidate")
         data["newbies_today"] = Candidate.objects.filter(
             joining_date__range=[date.today(), date.today() + timedelta(days=1)],
             is_active=True,
@@ -3098,7 +3098,7 @@ def bonus_points_tab(request, emp_id):
     employee_obj = Employee.objects.get(id=emp_id)
     points = BonusPoint.objects.get(employee_id=emp_id)
     if apps.is_installed("payroll"):
-        Reimbursement = get_horilla_model_class(
+        Reimbursement = get_ems_model_class(
             app_label="payroll", model="reimbursement"
         )
         requested_bonus_points = Reimbursement.objects.filter(
@@ -3211,7 +3211,7 @@ def redeem_points(request, emp_id):
 
     amount_for_bonus_point = 0
     if apps.is_installed("payroll"):
-        EncashmentGeneralSettings = get_horilla_model_class(
+        EncashmentGeneralSettings = get_ems_model_class(
             app_label="payroll", model="encashmentgeneralsettings"
         )
         amount_for_bonus_point = (
@@ -3227,7 +3227,7 @@ def redeem_points(request, emp_id):
             points = form.cleaned_data["points"]
             amount = amount_for_bonus_point * points
             if apps.is_installed("payroll"):
-                Reimbursement = get_horilla_model_class(
+                Reimbursement = get_ems_model_class(
                     app_label="payroll", model="reimbursement"
                 )
                 Reimbursement.objects.create(
@@ -3346,7 +3346,7 @@ def encashment_condition_create(request):
     if apps.is_installed("payroll"):
         from payroll.forms.forms import EncashmentGeneralSettingsForm
 
-        EncashmentGeneralSettings = get_horilla_model_class(
+        EncashmentGeneralSettings = get_ems_model_class(
             app_label="payroll", model="encashmentgeneralsettings"
         )
         instance = (

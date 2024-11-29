@@ -2,8 +2,8 @@
 models.py
 =========
 
-This module defines the abstract base model `HorillaModel` for the Horilla HRMS project.
-The `HorillaModel` provides common fields and functionalities for other models within
+This module defines the abstract base model `EmsModel` for the Ems HRMS project.
+The `EmsModel` provides common fields and functionalities for other models within
 the application, such as tracking creation and modification timestamps and user
 information, audit logging, and active/inactive status management.
 """
@@ -16,7 +16,7 @@ from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 
 
 @property
@@ -34,10 +34,10 @@ def url(self: FieldFile):
 setattr(FieldFile, "url", url)
 
 
-class HorillaModel(models.Model):
+class EmsModel(models.Model):
     """
     An abstract base model that includes common fields and functionalities
-    for models within the Horilla application.
+    for models within the Ems application.
     """
 
     created_at = models.DateTimeField(
@@ -64,13 +64,13 @@ class HorillaModel(models.Model):
         verbose_name=_("Modified By"),
         related_name="%(class)s_modified_by",
     )
-    horilla_history = AuditlogHistoryField()
+    ems_history = AuditlogHistoryField()
     objects = models.Manager()
     is_active = models.BooleanField(default=True, verbose_name=_("Is Active"))
 
     class Meta:
         """
-        Meta class for HorillaModel
+        Meta class for EmsModel
         """
 
         abstract = True
@@ -97,7 +97,7 @@ class HorillaModel(models.Model):
             if request and not request.user.is_anonymous:
                 self.modified_by = user
 
-        super(HorillaModel, self).save(*args, **kwargs)
+        super(EmsModel, self).save(*args, **kwargs)
 
     @classmethod
     def find(cls, object_id):
@@ -122,4 +122,4 @@ class HorillaModel(models.Model):
             obj.save()
 
 
-auditlog.register(HorillaModel, serialize_data=True)
+auditlog.register(EmsModel, serialize_data=True)

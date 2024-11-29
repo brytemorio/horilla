@@ -1,5 +1,5 @@
 """
-horilla_automation/signals.py
+ems_automation/signals.py
 
 """
 
@@ -15,7 +15,7 @@ from django.db.models.query import QuerySet
 from django.db.models.signals import post_delete, post_save, pre_save
 from django.dispatch import receiver
 
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 from ems.signals import post_bulk_update, pre_bulk_update
 
 logger = logging.getLogger(__name__)

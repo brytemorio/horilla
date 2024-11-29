@@ -8,9 +8,9 @@ import operator
 from django.core.exceptions import FieldDoesNotExist
 from django.http import QueryDict
 
-from base.templatetags.horillafilters import app_installed
+from base.templatetags.emsfilters import app_installed
 from employee.models import Employee
-from ems.models import HorillaModel
+from ems.models import EmsModel
 from ems_views.templatetags.generic_template_filters import getattribute
 
 recruitment_installed = False
@@ -22,7 +22,7 @@ if app_installed("recruitment"):
 app_installed
 
 
-def get_related_models(model: HorillaModel) -> list:
+def get_related_models(model: EmsModel) -> list:
     related_models = []
     for field in model._meta.get_fields():
         if field.one_to_many or field.one_to_one or field.many_to_many:

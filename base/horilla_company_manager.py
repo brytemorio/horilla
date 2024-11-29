@@ -1,5 +1,5 @@
 """
-horilla_company_manager.py
+ems_company_manager.py
 """
 
 import logging
@@ -8,7 +8,7 @@ from typing import Coroutine, Sequence
 from django.db import models
 from django.db.models.query import QuerySet
 
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 from ems.signals import post_bulk_update, pre_bulk_update
 
 logger = logging.getLogger(__name__)
@@ -30,9 +30,9 @@ def update(self, *args, **kwargs):
 setattr(QuerySet, "update", update)
 
 
-class HorillaCompanyManager(models.Manager):
+class EmsCompanyManager(models.Manager):
     """
-    HorillaCompanyManager
+    EmsCompanyManager
     """
 
     def __init__(self, related_company_field=None, *args, **kwargs):

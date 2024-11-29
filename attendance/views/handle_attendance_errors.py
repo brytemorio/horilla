@@ -5,7 +5,7 @@ import uuid
 import pandas as pd
 from django.http import HttpResponse
 
-from ems.horilla_settings import DYNAMIC_URL_PATTERNS
+from ems.ems_settings import DYNAMIC_URL_PATTERNS
 from ems.methods import remove_dynamic_url
 
 

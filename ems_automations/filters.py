@@ -2,11 +2,11 @@
 ems_automations/filters.py
 """
 
-from ems.filters import HorillaFilterSet, django_filters
+from ems.filters import EmsFilterSet, django_filters
 from ems_automations.models import MailAutomation
 
 
-class AutomationFilter(HorillaFilterSet):
+class AutomationFilter(EmsFilterSet):
     """
     AutomationFilter
     """

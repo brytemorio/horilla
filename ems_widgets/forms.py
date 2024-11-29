@@ -1,22 +1,22 @@
 """
 forms.py
 
-Horilla forms
+Ems forms
 """
 
 from typing import Any, Dict
 
 from django import forms
 
-from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
+from ems_widgets.widgets.ems_multi_select_field import EmsMultiSelectField
 
-forms.Select.option_template_name = "ems_widgets/horilla_select_option.html"
+forms.Select.option_template_name = "ems_widgets/ems_select_option.html"
 
 
-class HorillaForm(forms.Form):
+class EmsForm(forms.Form):
     def clean(self) -> Dict[str, Any]:
         for field_name, field_instance in self.fields.items():
-            if isinstance(field_instance, HorillaMultiSelectField):
+            if isinstance(field_instance, EmsMultiSelectField):
                 self.errors.pop(field_name, None)
                 if len(self.data.getlist(field_name)) < 1:
                     raise forms.ValidationError({field_name: "This field is required"})
@@ -29,10 +29,10 @@ class HorillaForm(forms.Form):
         return cleaned_data
 
 
-class HorillaModelForm(forms.ModelForm):
+class EmsModelForm(forms.ModelForm):
     def clean(self) -> Dict[str, Any]:
         for field_name, field_instance in self.fields.items():
-            if isinstance(field_instance, HorillaMultiSelectField):
+            if isinstance(field_instance, EmsMultiSelectField):
                 self.errors.pop(field_name, None)
                 if len(self.data.getlist(field_name)) < 1:
                     raise forms.ValidationError({field_name: "Thif field is required"})

@@ -10,7 +10,7 @@ from django.forms.utils import ErrorList
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 
-from ems_audit.models import AuditTag, HorillaAuditInfo
+from ems_audit.models import AuditTag, EmsAuditInfo
 
 
 class HistoryForm(forms.Form):
@@ -51,7 +51,7 @@ class HistoryForm(forms.Form):
         Render the form fields as HTML table rows with Bootstrap styling.
         """
         context = {"form": self}
-        table_html = render_to_string("horilla_audit/horilla_audit_log.html", context)
+        table_html = render_to_string("ems_audit/ems_audit_log.html", context)
         return table_html
 
 

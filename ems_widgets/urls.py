@@ -1,5 +1,5 @@
 """
-horilla_widget/urls.py
+ems_widget/urls.py
 """
 
 from django.urls import path

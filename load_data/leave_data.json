@@ -3263,7 +3263,7 @@
       "end_date": "2024-09-16",
       "department": 1,
       "include_all": true,
-      "description": "Horilla Project Installation",
+      "description": "Ems Project Installation",
       "job_position": [],
       "spesific_leave_types": [],
       "exclued_leave_types": []
@@ -3282,7 +3282,7 @@
       "end_date": "2024-09-27",
       "department": 2,
       "include_all": true,
-      "description": "Luanch Horilla",
+      "description": "Luanch Ems",
       "job_position": [],
       "spesific_leave_types": [],
       "exclued_leave_types": []
@@ -3304,7 +3304,9 @@
       "description": "Chirstmas Sales",
       "job_position": [],
       "spesific_leave_types": [],
-      "exclued_leave_types": [3]
+      "exclued_leave_types": [
+        3
+      ]
     }
   },
   {

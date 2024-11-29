@@ -1,5 +1,5 @@
 """
-horilla_apps
+ems_apps
 
 This module is used to register ems addons
 """

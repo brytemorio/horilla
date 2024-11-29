@@ -35,7 +35,7 @@ from base.context_processors import (
 )
 from base.models import AttendanceAllowedIP, EmployeeShiftDay
 from ems.decorators import hx_request_required, login_required
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 
 
 def late_come_create(attendance):
@@ -248,7 +248,7 @@ def clock_in(request):
         if start_time_sec > end_time_sec:
             # night shift
             # ------------------
-            # Night shift in Horilla consider a 24 hours from noon to next day noon,
+            # Night shift in Ems consider a 24 hours from noon to next day noon,
             # the shift day taken today if the attendance clocked in after 12 O clock.
 
             if mid_day_sec > now_sec:

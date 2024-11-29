@@ -294,7 +294,7 @@ def breadcrumbs(request):
 
     except Exception as e:
         request.session["breadcrumbs"] = [
-            {"url": base_url, "name": "Horilla", "found": True}
+            {"url": base_url, "name": "Ems", "found": True}
         ]
     return {"breadcrumbs": request.session["breadcrumbs"]}
 

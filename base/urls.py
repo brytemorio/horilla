@@ -18,7 +18,7 @@ from base.models import (
     EmployeeShift,
     EmployeeShiftSchedule,
     EmployeeType,
-    HorillaMailTemplate,
+    EmsMailTemplate,
     JobPosition,
     JobRole,
     RotatingShift,
@@ -80,7 +80,7 @@ urlpatterns = [
     path("login/", views.login_user, name="login"),
     path(
         "forgot-password",
-        views.HorillaPasswordResetView.as_view(),
+        views.EmsPasswordResetView.as_view(),
         name="forgot-password",
     ),
     path(
@@ -179,7 +179,7 @@ urlpatterns = [
         views.object_duplicate,
         name="duplicate-mail-template",
         kwargs={
-            "model": HorillaMailTemplate,
+            "model": EmsMailTemplate,
             "form": MailTemplateForm,
             "template": "mail/htmx/form.html",
         },
@@ -976,7 +976,7 @@ urlpatterns = [
     ),
     path(
         "get-ems-installed-apps/",
-        views.get_horilla_installed_apps,
+        views.get_ems_installed_apps,
         name="get-ems-installed-apps",
     ),
     path("configuration/holiday-view", views.holiday_view, name="holiday-view"),

@@ -43,8 +43,8 @@ from ems.decorators import (
     permission_required,
 )
 from ems.group_by import group_by_queryset
-from ems.horilla_settings import HORILLA_DATE_FORMATS
-from ems.methods import dynamic_attr, get_horilla_model_class, get_urlencode
+from ems.ems_settings import EMS_DATE_FORMATS
+from ems.methods import dynamic_attr, get_ems_model_class, get_urlencode
 
 # from leave.models import AvailableLeave
 from notifications.signals import notify
@@ -1132,7 +1132,7 @@ def payslip_export(request):
                 start_date = datetime.strptime(str(value), "%Y-%m-%d").date()
 
                 # The formatted date for each format
-                for format_name, format_string in HORILLA_DATE_FORMATS.items():
+                for format_name, format_string in EMS_DATE_FORMATS.items():
                     if format_name == date_format:
                         data = start_date.strftime(format_string)
             else:
@@ -1519,7 +1519,7 @@ def asset_fine(request):
     Add asset fine method
     """
     if apps.is_installed("asset"):
-        Asset = get_horilla_model_class(app_label="asset", model="asset")
+        Asset = get_ems_model_class(app_label="asset", model="asset")
     asset_id = request.GET["asset_id"]
     employee_id = request.GET["employee_id"]
     asset = Asset.objects.get(id=asset_id)
@@ -1664,7 +1664,7 @@ def get_assigned_leaves(request):
     in Json
     """
     if apps.is_installed("leave"):
-        AvailableLeave = get_horilla_model_class(
+        AvailableLeave = get_ems_model_class(
             app_label="leave", model="availableleave"
         )
 
@@ -2054,7 +2054,7 @@ def payslip_detailed_export_data(request):
 
                 start_date = datetime.strptime(str(value), "%Y-%m-%d").date()
 
-                for format_name, format_string in HORILLA_DATE_FORMATS.items():
+                for format_name, format_string in EMS_DATE_FORMATS.items():
                     if format_name == date_format:
                         data = start_date.strftime(format_string)
             else:

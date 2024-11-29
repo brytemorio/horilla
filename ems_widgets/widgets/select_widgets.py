@@ -8,7 +8,7 @@ import uuid
 
 from django import forms
 
-from ems import horilla_middlewares
+from ems import ems_middlewares
 
 ALL_INSTANCES = {}
 
@@ -21,9 +21,9 @@ def get_short_uuid(length: int, prefix: str = "widget"):
     return prefix + str(uuid_str[:length]).replace("-", "")
 
 
-class HorillaMultiSelectWidget(forms.Widget):
+class EmsMultiSelectWidget(forms.Widget):
     """
-    HorillaMultiSelectWidget
+    EmsMultiSelectWidget
     """
 
     def __init__(
@@ -47,7 +47,7 @@ class HorillaMultiSelectWidget(forms.Widget):
         self.form = form
         super().__init__()
 
-    template_name = "horilla_widgets/horilla_multiselect_widget.html"
+    template_name = "ems_widgets/ems_multiselect_widget.html"
 
     def get_context(self, name, value, attrs):
         # Get the default context from the parent class
@@ -79,7 +79,7 @@ class HorillaMultiSelectWidget(forms.Widget):
         uid = get_short_uuid(5)
         context["section_id"] = uid
         context[self.filter_instance_contex_name] = self.filter_class
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(ems_middlewares._thread_locals, "request", None)
         ALL_INSTANCES[str(request.user.id)] = self
 
         return context

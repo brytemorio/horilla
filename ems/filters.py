@@ -11,7 +11,7 @@ from django.db import models
 from django_filters.filterset import FILTER_FOR_DBFIELD_DEFAULTS
 
 from base.methods import reload_queryset
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 from ems_views.templatetags.generic_template_filters import getattribute
 
 FILTER_FOR_DBFIELD_DEFAULTS[models.ForeignKey][
@@ -80,7 +80,7 @@ class FilterSet(django_filters.FilterSet):
                 )
 
 
-class HorillaPaginator(Paginator):
+class EmsPaginator(Paginator):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.start_count = 0
@@ -101,9 +101,9 @@ class HorillaPaginator(Paginator):
         return self.page
 
 
-class HorillaFilterSet(FilterSet):
+class EmsFilterSet(FilterSet):
     """
-    HorillaFilterSet
+    EmsFilterSet
     """
 
     verbose_name: dict = {}

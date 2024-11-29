@@ -9,13 +9,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.ems_company_manager import EmsCompanyManager
 from base.models import Company
 from employee.models import Employee
-from ems.models import HorillaModel
+from ems.models import EmsModel
 
 
-class AssetCategory(HorillaModel):
+class AssetCategory(EmsModel):
     """
     Represents a category for different types of assets.
     """
@@ -29,7 +29,7 @@ class AssetCategory(HorillaModel):
         return f"{self.asset_category_name}"
 
 
-class AssetLot(HorillaModel):
+class AssetLot(EmsModel):
     """
     Represents a lot associated with a collection of assets.
     """
@@ -37,13 +37,13 @@ class AssetLot(HorillaModel):
     lot_number = models.CharField(max_length=30, null=False, blank=False, unique=True)
     lot_description = models.TextField(null=True, blank=True, max_length=255)
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))
-    objects = HorillaCompanyManager()
+    objects = EmsCompanyManager()
 
     def __str__(self):
         return f"{self.lot_number}"
 
 
-class Asset(HorillaModel):
+class Asset(EmsModel):
     """
     Represents a asset with various attributes.
     """
@@ -68,7 +68,7 @@ class Asset(HorillaModel):
     )
     expiry_date = models.DateField(null=True, blank=True)
     notify_before = models.IntegerField(default=1, null=True)
-    objects = HorillaCompanyManager("asset_category_id__company_id")
+    objects = EmsCompanyManager("asset_category_id__company_id")
 
     def __str__(self):
         return f"{self.asset_name}-{self.asset_tracking_id}"
@@ -90,7 +90,7 @@ class Asset(HorillaModel):
         return super().clean()
 
 
-class AssetReport(HorillaModel):
+class AssetReport(EmsModel):
     """
     Model representing a report for an asset.
 
@@ -117,7 +117,7 @@ class AssetReport(HorillaModel):
         )
 
 
-class AssetDocuments(HorillaModel):
+class AssetDocuments(EmsModel):
     """
     Model representing documents associated with an asset report.
 
@@ -139,7 +139,7 @@ class AssetDocuments(HorillaModel):
         return f"document for {self.asset_report}"
 
 
-class ReturnImages(HorillaModel):
+class ReturnImages(EmsModel):
     """
     Model representing images associated with a returned asset.
 
@@ -150,7 +150,7 @@ class ReturnImages(HorillaModel):
     image = models.FileField(upload_to="asset/return_images/", blank=True, null=True)
 
 
-class AssetAssignment(HorillaModel):
+class AssetAssignment(EmsModel):
     """
     Represents the allocation and return of assets to and from employees.
     """
@@ -176,7 +176,7 @@ class AssetAssignment(HorillaModel):
         choices=STATUS, max_length=30, null=True, blank=True
     )
     return_request = models.BooleanField(default=False)
-    objects = HorillaCompanyManager("asset_id__asset_lot_number_id__company_id")
+    objects = EmsCompanyManager("asset_id__asset_lot_number_id__company_id")
     return_images = models.ManyToManyField(
         ReturnImages, blank=True, related_name="return_images"
     )
@@ -193,7 +193,7 @@ class AssetAssignment(HorillaModel):
         return f"{self.assigned_to_employee_id} --- {self.asset_id} --- {self.return_status}"
 
 
-class AssetRequest(HorillaModel):
+class AssetRequest(EmsModel):
     """
     Represents a request for assets made by employees.
     """
@@ -218,7 +218,7 @@ class AssetRequest(HorillaModel):
     asset_request_status = models.CharField(
         max_length=30, choices=STATUS, default="Requested", null=True, blank=True
     )
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         "requested_employee_id__employee_work_info__company_id"
     )
 

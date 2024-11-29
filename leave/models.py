@@ -18,7 +18,7 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.ems_company_manager import EmsCompanyManager
 from base.methods import get_date_range
 from base.models import (
     Company,
@@ -30,11 +30,11 @@ from base.models import (
     clear_messages,
 )
 from employee.models import Employee, EmployeeWorkInformation
-from ems import horilla_middlewares
-from ems.methods import get_horilla_model_class
-from ems.models import HorillaModel
+from ems import ems_middlewares
+from ems.methods import get_ems_model_class
+from ems.models import EmsModel
 from ems_audit.methods import get_diff
-from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_audit.models import EmsAuditInfo, EmsAuditLog
 from leave.methods import calculate_requested_days
 from leave.threading import LeaveClashThread
 
@@ -159,7 +159,7 @@ WEEK_DAYS = [
 ]
 
 
-class LeaveType(HorillaModel):
+class LeaveType(EmsModel):
     icon = models.ImageField(null=True, blank=True, upload_to="leave/leave_icon")
     name = models.CharField(max_length=30, null=False)
     color = models.CharField(null=True, max_length=30)
@@ -208,7 +208,7 @@ class LeaveType(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = EmsCompanyManager(related_company_field="company_id")
 
     class Meta:
         ordering = ["-id"]
@@ -289,7 +289,7 @@ class LeaveType(HorillaModel):
         return self.name
 
 
-class Holiday(HorillaModel):
+class Holiday(EmsModel):
     name = models.CharField(max_length=30, null=False, verbose_name=_("Name"))
     start_date = models.DateField(verbose_name=_("Start Date"))
     end_date = models.DateField(null=True, blank=True, verbose_name=_("End Date"))
@@ -297,13 +297,13 @@ class Holiday(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = EmsCompanyManager(related_company_field="company_id")
 
     def __str__(self):
         return self.name
 
 
-class CompanyLeave(HorillaModel):
+class CompanyLeave(EmsModel):
     based_on_week = models.CharField(
         max_length=100, choices=WEEKS, blank=True, null=True
     )
@@ -311,7 +311,7 @@ class CompanyLeave(HorillaModel):
     company_id = models.ForeignKey(
         Company, null=True, editable=False, on_delete=models.PROTECT
     )
-    objects = HorillaCompanyManager(related_company_field="company_id")
+    objects = EmsCompanyManager(related_company_field="company_id")
 
     class Meta:
         unique_together = ("based_on_week", "based_on_week_day")
@@ -323,7 +323,7 @@ class CompanyLeave(HorillaModel):
 from django.db.models import Sum
 
 
-class AvailableLeave(HorillaModel):
+class AvailableLeave(EmsModel):
     employee_id = models.ForeignKey(
         Employee,
         on_delete=models.CASCADE,
@@ -352,13 +352,13 @@ class AvailableLeave(HorillaModel):
     expired_date = models.DateField(
         blank=True, null=True, verbose_name=_("CarryForward Expired Date")
     )
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
-    history = HorillaAuditLog(
+    history = EmsAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            EmsAuditInfo,
         ],
     )
 
@@ -504,7 +504,7 @@ def restrict_leaves(restri):
     return restricted_dates
 
 
-class LeaveRequest(HorillaModel):
+class LeaveRequest(EmsModel):
     employee_id = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name=_("Employee")
     )
@@ -552,10 +552,10 @@ class LeaveRequest(HorillaModel):
     reject_reason = models.TextField(
         blank=True, verbose_name=_("Reject Reason"), max_length=255
     )
-    history = HorillaAuditLog(
+    history = EmsAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            EmsAuditInfo,
         ],
     )
     created_by = models.ForeignKey(
@@ -566,7 +566,7 @@ class LeaveRequest(HorillaModel):
         related_name="leave_request_created",
         verbose_name=_("Created By"),
     )
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -737,7 +737,7 @@ class LeaveRequest(HorillaModel):
             emp_dep = self.employee_id.employee_work_info.department_id
             emp_job = self.employee_id.employee_work_info.job_position_id
 
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(ems_middlewares._thread_locals, "request", None)
         if not request.user.is_superuser:
             if EmployeePastLeaveRestrict.objects.first().enabled:
                 if self.start_date < date.today():
@@ -865,7 +865,7 @@ class LeaveRequest(HorillaModel):
         return result
 
     def is_approved(self):
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(ems_middlewares._thread_locals, "request", None)
         if request:
             employee = Employee.objects.filter(employee_user_id=request.user).first()
             condition_approval = LeaveRequestConditionApproval.objects.filter(
@@ -877,7 +877,7 @@ class LeaveRequest(HorillaModel):
                 return True
 
     def delete(self, *args, **kwargs):
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(ems_middlewares._thread_locals, "request", None)
 
         if self.status == "requested":
             """
@@ -944,7 +944,7 @@ class LeaverequestFile(models.Model):
     file = models.FileField(upload_to="leave/request_files")
 
 
-class LeaverequestComment(HorillaModel):
+class LeaverequestComment(EmsModel):
     """
     LeaverequestComment Model
     """
@@ -958,7 +958,7 @@ class LeaverequestComment(HorillaModel):
         return f"{self.comment}"
 
 
-class LeaveAllocationRequest(HorillaModel):
+class LeaveAllocationRequest(EmsModel):
     leave_type_id = models.ForeignKey(
         LeaveType, on_delete=models.PROTECT, verbose_name="Leave type"
     )
@@ -975,13 +975,13 @@ class LeaveAllocationRequest(HorillaModel):
         max_length=30, choices=LEAVE_ALLOCATION_STATUS, default="requested"
     )
     reject_reason = models.TextField(blank=True, max_length=255)
-    history = HorillaAuditLog(
+    history = EmsAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            EmsAuditInfo,
         ],
     )
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -1017,7 +1017,7 @@ class LeaveAllocationRequest(HorillaModel):
             return None
 
 
-class LeaveallocationrequestComment(HorillaModel):
+class LeaveallocationrequestComment(EmsModel):
     """
     LeaveallocationrequestComment Model
     """
@@ -1039,7 +1039,7 @@ class LeaveRequestConditionApproval(models.Model):
     manager_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
 
-class RestrictLeave(HorillaModel):
+class RestrictLeave(EmsModel):
     title = models.CharField(max_length=200)
     start_date = models.DateField(verbose_name=_("Start Date"))
     end_date = models.DateField(verbose_name=_("End Date"))
@@ -1082,7 +1082,7 @@ class RestrictLeave(HorillaModel):
 
 if apps.is_installed("attendance"):
 
-    class CompensatoryLeaveRequest(HorillaModel):
+    class CompensatoryLeaveRequest(EmsModel):
         leave_type_id = models.ForeignKey(
             LeaveType, on_delete=models.PROTECT, verbose_name="Leave type"
         )
@@ -1100,13 +1100,13 @@ if apps.is_installed("attendance"):
             max_length=30, choices=LEAVE_ALLOCATION_STATUS, default="requested"
         )
         reject_reason = models.TextField(blank=True, max_length=255)
-        history = HorillaAuditLog(
+        history = EmsAuditLog(
             related_name="history_set",
             bases=[
-                HorillaAuditInfo,
+                EmsAuditInfo,
             ],
         )
-        objects = HorillaCompanyManager(
+        objects = EmsCompanyManager(
             related_company_field="employee_id__employee_work_info__company_id"
         )
 
@@ -1151,7 +1151,7 @@ if apps.is_installed("attendance"):
             super().save(*args, **kwargs)
 
 
-class LeaveGeneralSetting(HorillaModel):
+class LeaveGeneralSetting(EmsModel):
     """
     LeaveGeneralSettings
     """
@@ -1163,7 +1163,7 @@ class LeaveGeneralSetting(HorillaModel):
 
 if apps.is_installed("attendance"):
 
-    class CompensatoryLeaverequestComment(HorillaModel):
+    class CompensatoryLeaverequestComment(EmsModel):
         """
         CompensatoryLeaverequestComment Model
         """
@@ -1179,7 +1179,7 @@ if apps.is_installed("attendance"):
             return f"{self.comment}"
 
 
-class EmployeePastLeaveRestrict(HorillaModel):
+class EmployeePastLeaveRestrict(EmsModel):
     enabled = models.BooleanField(default=True)
 
 
@@ -1196,7 +1196,7 @@ if apps.is_installed("attendance"):
             """
             Overriding LeaveRequest model save method
             """
-            WorkRecords = get_horilla_model_class(
+            WorkRecords = get_ems_model_class(
                 app_label="attendance", model="workrecords"
             )
             if (

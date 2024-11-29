@@ -21,7 +21,7 @@ from ems.decorators import (
     permission_required,
 )
 from ems.group_by import group_by_queryset as group_by
-from ems.methods import get_horilla_model_class
+from ems.methods import get_ems_model_class
 from notifications.signals import notify
 from offboarding.decorators import (
     any_manager_can_enter,
@@ -837,7 +837,7 @@ def update_status(request):
     status = request.GET["status"]
     offboarding_id = request.GET.get("offboarding_id")
     default_notice_end = (
-        get_horilla_model_class(
+        get_ems_model_class(
             app_label="payroll", model="payrollgeneralsetting"
         ).objects.first()
         if apps.is_installed("payroll")
@@ -921,7 +921,7 @@ def get_notice_period(request):
     """
     employee_id = request.GET["employee_id"]
     if apps.is_installed("payroll"):
-        Contract = get_horilla_model_class(app_label="payroll", model="contract")
+        Contract = get_ems_model_class(app_label="payroll", model="contract")
         employee_contract = (
             (
                 Contract.objects.order_by("-id")

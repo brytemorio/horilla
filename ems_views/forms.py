@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from django.utils.safestring import SafeText
 from django.utils.translation import gettext_lazy as _trans
 
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 from ems_views import models
 from ems_views.cbv_methods import (
     BOOLEAN_CHOICES,

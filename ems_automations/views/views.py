@@ -1,5 +1,5 @@
 """
-horilla_automation/views/views.py
+ems_automation/views/views.py
 """
 
 from django import forms
@@ -43,7 +43,7 @@ def get_to_field(request):
 
 
 @login_required
-@permission_required("horilla_automation")
+@permission_required("ems_automation")
 def delete_automation(request, pk):
     """
     Automation delete view

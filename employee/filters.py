@@ -14,12 +14,12 @@ from django_filters import CharFilter
 from employee.models import DisciplinaryAction, Employee, Policy
 
 # from attendance.models import Attendance
-from ems.filters import FilterSet, HorillaFilterSet, filter_by_name
+from ems.filters import FilterSet, EmsFilterSet, filter_by_name
 from ems_documents.models import Document
 from ems_views.templatetags.generic_template_filters import getattribute
 
 
-class EmployeeFilter(HorillaFilterSet):
+class EmployeeFilter(EmsFilterSet):
     """
     Filter set class for Candidate model
 

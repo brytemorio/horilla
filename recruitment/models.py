@@ -22,12 +22,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.ems_company_manager import EmsCompanyManager
 from base.models import Company, JobPosition
 from employee.models import Employee
-from ems.models import HorillaModel
+from ems.models import EmsModel
 from ems_audit.methods import get_diff
-from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
+from ems_audit.models import EmsAuditInfo, EmsAuditLog
 
 # Create your models here.
 
@@ -71,7 +71,7 @@ def candidate_photo_upload_path(instance, filename):
     return os.path.join("recruitment/profile/", filename)
 
 
-class SurveyTemplate(HorillaModel):
+class SurveyTemplate(EmsModel):
     """
     SurveyTemplate Model
     """
@@ -91,7 +91,7 @@ class SurveyTemplate(HorillaModel):
         return self.title
 
 
-class Skill(HorillaModel):
+class Skill(EmsModel):
     title = models.CharField(max_length=100)
 
     def __str__(self):
@@ -103,7 +103,7 @@ class Skill(HorillaModel):
         super().save(*args, **kwargs)
 
 
-class Recruitment(HorillaModel):
+class Recruitment(EmsModel):
     """
     Recruitment model
     """
@@ -160,7 +160,7 @@ class Recruitment(HorillaModel):
     start_date = models.DateField(default=django.utils.timezone.now)
     end_date = models.DateField(blank=True, null=True)
     skills = models.ManyToManyField(Skill, blank=True)
-    objects = HorillaCompanyManager()
+    objects = EmsCompanyManager()
     default = models.manager.Manager()
     optional_profile_image = models.BooleanField(
         default=False, help_text=_("Profile image not mandatory for candidate creation")
@@ -266,7 +266,7 @@ def create_initial_stage(sender, instance, created, **kwargs):
         initial_stage.save()
 
 
-class Stage(HorillaModel):
+class Stage(EmsModel):
     """
     Stage model
     """
@@ -291,7 +291,7 @@ class Stage(HorillaModel):
         max_length=20, choices=stage_types, default="interview"
     )
     sequence = models.IntegerField(null=True, default=0)
-    objects = HorillaCompanyManager(related_company_field="recruitment_id__company_id")
+    objects = EmsCompanyManager(related_company_field="recruitment_id__company_id")
 
     def __str__(self):
         return f"{self.stage}"
@@ -316,7 +316,7 @@ class Stage(HorillaModel):
         }
 
 
-class Candidate(HorillaModel):
+class Candidate(EmsModel):
     """
     Candidate model
     """
@@ -427,10 +427,10 @@ class Candidate(HorillaModel):
     joining_date = models.DateField(
         blank=True, null=True, verbose_name=_("Joining Date")
     )
-    history = HorillaAuditLog(
+    history = EmsAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            EmsAuditInfo,
         ],
     )
     sequence = models.IntegerField(null=True, default=0)
@@ -442,7 +442,7 @@ class Candidate(HorillaModel):
         default="not_sent",
         editable=False,
     )
-    objects = HorillaCompanyManager(related_company_field="recruitment_id__company_id")
+    objects = EmsCompanyManager(related_company_field="recruitment_id__company_id")
     last_updated = models.DateField(null=True, auto_now=True)
 
     converted_employee_id.exclude_from_automation = True
@@ -611,7 +611,7 @@ class Candidate(HorillaModel):
 from ems.signals import pre_bulk_update
 
 
-class RejectReason(HorillaModel):
+class RejectReason(EmsModel):
     """
     RejectReason
     """
@@ -627,13 +627,13 @@ class RejectReason(HorillaModel):
         blank=True,
         verbose_name=_("Company"),
     )
-    objects = HorillaCompanyManager()
+    objects = EmsCompanyManager()
 
     def __str__(self) -> str:
         return self.title
 
 
-class RejectedCandidate(HorillaModel):
+class RejectedCandidate(EmsModel):
     """
     RejectedCandidate
     """
@@ -648,13 +648,13 @@ class RejectedCandidate(HorillaModel):
         RejectReason, verbose_name="Reject reason", blank=True
     )
     description = models.TextField(max_length=255)
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="candidate_id__recruitment_id__company_id"
     )
-    history = HorillaAuditLog(
+    history = EmsAuditLog(
         related_name="history_set",
         bases=[
-            HorillaAuditInfo,
+            EmsAuditInfo,
         ],
     )
 
@@ -662,14 +662,14 @@ class RejectedCandidate(HorillaModel):
         return super().__str__()
 
 
-class StageFiles(HorillaModel):
+class StageFiles(EmsModel):
     files = models.FileField(upload_to="recruitment/stageFiles", blank=True, null=True)
 
     def __str__(self):
         return self.files.name.split("/")[-1]
 
 
-class StageNote(HorillaModel):
+class StageNote(EmsModel):
     """
     StageNote model
     """
@@ -679,7 +679,7 @@ class StageNote(HorillaModel):
     stage_id = models.ForeignKey(Stage, on_delete=models.CASCADE)
     stage_files = models.ManyToManyField(StageFiles, blank=True)
     updated_by = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="candidate_id__recruitment_id__company_id"
     )
 
@@ -687,7 +687,7 @@ class StageNote(HorillaModel):
         return f"{self.description}"
 
 
-class RecruitmentSurvey(HorillaModel):
+class RecruitmentSurvey(EmsModel):
     """
     RecruitmentSurvey model
     """
@@ -725,7 +725,7 @@ class RecruitmentSurvey(HorillaModel):
     options = models.TextField(
         null=True, default="", help_text=_("Separate choices by ',  '"), max_length=255
     )
-    objects = HorillaCompanyManager(related_company_field="recruitment_ids__company_id")
+    objects = EmsCompanyManager(related_company_field="recruitment_ids__company_id")
 
     def __str__(self) -> str:
         return str(self.question)
@@ -752,7 +752,7 @@ class RecruitmentSurvey(HorillaModel):
         ]
 
 
-class QuestionOrdering(HorillaModel):
+class QuestionOrdering(EmsModel):
     """
     Survey Template model
     """
@@ -760,10 +760,10 @@ class QuestionOrdering(HorillaModel):
     question_id = models.ForeignKey(RecruitmentSurvey, on_delete=models.CASCADE)
     recruitment_id = models.ForeignKey(Recruitment, on_delete=models.CASCADE)
     sequence = models.IntegerField(default=0)
-    objects = HorillaCompanyManager(related_company_field="recruitment_ids__company_id")
+    objects = EmsCompanyManager(related_company_field="recruitment_ids__company_id")
 
 
-class RecruitmentSurveyAnswer(HorillaModel):
+class RecruitmentSurveyAnswer(EmsModel):
     """
     RecruitmentSurveyAnswer
     """
@@ -785,7 +785,7 @@ class RecruitmentSurveyAnswer(HorillaModel):
     attachment = models.FileField(
         upload_to="recruitment_attachment", null=True, blank=True
     )
-    objects = HorillaCompanyManager(related_company_field="recruitment_id__company_id")
+    objects = EmsCompanyManager(related_company_field="recruitment_id__company_id")
 
     @property
     def answer(self):
@@ -802,7 +802,7 @@ class RecruitmentSurveyAnswer(HorillaModel):
         return f"{self.candidate_id.name}-{self.recruitment_id}"
 
 
-class RecruitmentMailTemplate(HorillaModel):
+class RecruitmentMailTemplate(EmsModel):
     title = models.CharField(max_length=25, unique=True)
     body = models.TextField()
     company_id = models.ForeignKey(
@@ -817,7 +817,7 @@ class RecruitmentMailTemplate(HorillaModel):
         return f"{self.title}"
 
 
-class SkillZone(HorillaModel):
+class SkillZone(EmsModel):
     """ "
     Model for talent pool
     """
@@ -831,7 +831,7 @@ class SkillZone(HorillaModel):
         on_delete=models.CASCADE,
         verbose_name=_("Company"),
     )
-    objects = HorillaCompanyManager()
+    objects = EmsCompanyManager()
 
     def get_active(self):
         return SkillZoneCandidate.objects.filter(is_active=True, skill_zone_id=self)
@@ -840,7 +840,7 @@ class SkillZone(HorillaModel):
         return self.title
 
 
-class SkillZoneCandidate(HorillaModel):
+class SkillZoneCandidate(EmsModel):
     """
     Model for saving candidate data's for future recruitment
     """
@@ -869,7 +869,7 @@ class SkillZoneCandidate(HorillaModel):
 
     reason = models.CharField(max_length=200, verbose_name=_("Reason"))
     added_on = models.DateField(auto_now_add=True)
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="candidate_id__recruitment_id__company_id"
     )
 
@@ -887,7 +887,7 @@ class SkillZoneCandidate(HorillaModel):
         return str(self.candidate_id.get_full_name())
 
 
-class CandidateRating(HorillaModel):
+class CandidateRating(EmsModel):
     employee_id = models.ForeignKey(
         Employee, on_delete=models.PROTECT, related_name="candidate_rating"
     )
@@ -905,7 +905,7 @@ class CandidateRating(HorillaModel):
         return f"{self.employee_id} - {self.candidate_id} rating {self.rating}"
 
 
-class RecruitmentGeneralSetting(HorillaModel):
+class RecruitmentGeneralSetting(EmsModel):
     """
     RecruitmentGeneralSettings model
     """
@@ -915,7 +915,7 @@ class RecruitmentGeneralSetting(HorillaModel):
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE, null=True)
 
 
-class InterviewSchedule(HorillaModel):
+class InterviewSchedule(EmsModel):
     """
     Interview Scheduling Model
     """

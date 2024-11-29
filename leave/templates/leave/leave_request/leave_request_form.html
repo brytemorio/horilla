@@ -1,30 +1,30 @@
-{% load i18n %} {% load horillafilters %} {% if messages %}
-<div class="oh-wrapper">
-    {% for message in messages %}
-    <div class="oh-alert-container">
-        <div class="oh-alert oh-alert--animated {{message.tags}}">
-            {{ message }}
-        </div>
+{% load i18n %} {% load emsfilters %} {% if messages %}
+    <div class="oh-wrapper">
+        {% for message in messages %}
+            <div class="oh-alert-container">
+                <div class="oh-alert oh-alert--animated {{ message.tags }}">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+        <script>
+            setTimeout(function () {
+                $(".oh-modal__close").click();
+            }, 1000);
+        </script>
     </div>
-    {% endfor %}
-    <script>
-        setTimeout(function () {
-            $(".oh-modal__close").click();
-        }, 1000);
-    </script>
-</div>
 {% endif %}
 <div class="oh-modal__dialog-header">
     <span class="oh-modal__dialog-title" id="objectCreateModalLabel"
-        >{% trans "Leave Request" %}</span
+    >{% trans "Leave Request" %}</span
     >
     <button
-        class="oh-modal__close"
-        aria-label="Close"
-        {% if messages %}
-            hx-get="{% url 'request-filter' %}?{{pd}}"
+            class="oh-modal__close"
+            aria-label="Close"
+            {% if messages %}
+            hx-get="{% url 'request-filter' %}?{{ pd }}"
             hx-target="#leaveRequest"
-        {% endif %}
+            {% endif %}
     >
         <ion-icon name="close-outline"></ion-icon>
     </button>
@@ -32,12 +32,12 @@
 </div>
 <div class="oh-modal__dialog-body">
     <form
-        hx-post="{% url 'request-creation' %}?{{pd}}"
-        hx-encoding="multipart/form-data"
-        hx-target="#objectCreateModalTarget"
-        id="leaveRequestCreateForm"
+            hx-post="{% url 'request-creation' %}?{{ pd }}"
+            hx-encoding="multipart/form-data"
+            hx-target="#objectCreateModalTarget"
+            id="leaveRequestCreateForm"
     >
-        {{form.as_p}}
+        {{ form.as_p }}
     </form>
 </div>
 <script>

@@ -11,9 +11,9 @@ from django.urls import path
 from base.models import Company, TrackLateComeEarlyOut
 from base.urls import urlpatterns
 from employee.models import EmployeeGeneralSetting
-from ems import horilla_apps
+from ems import ems_apps
 from ems.decorators import hx_request_required, login_required, permission_required
-from ems.methods import get_horilla_model_class
+from ems.methods import get_ems_model_class
 
 
 class AllCompany:
@@ -103,7 +103,7 @@ urlpatterns.append(
 
 
 def white_labelling_company(request):
-    white_labelling = getattr(horilla_apps, "WHITE_LABELLING", False)
+    white_labelling = getattr(ems_apps, "WHITE_LABELLING", False)
     if white_labelling:
         hq = Company.objects.filter(hq=True).last()
         try:
@@ -133,7 +133,7 @@ def resignation_request_enabled(request):
     enabled_resignation_request = False
     first = None
     if apps.is_installed("offboarding"):
-        OffboardingGeneralSetting = get_horilla_model_class(
+        OffboardingGeneralSetting = get_ems_model_class(
             app_label="offboarding", model="offboardinggeneralsetting"
         )
         first = OffboardingGeneralSetting.objects.first()
@@ -149,7 +149,7 @@ def timerunner_enabled(request):
     first = None
     enabled_timerunner = True
     if apps.is_installed("attendance"):
-        AttendanceGeneralSetting = get_horilla_model_class(
+        AttendanceGeneralSetting = get_ems_model_class(
             app_label="attendance", model="attendancegeneralsetting"
         )
         first = AttendanceGeneralSetting.objects.first()
@@ -165,7 +165,7 @@ def intial_notice_period(request):
     initial = 30
     first = None
     if apps.is_installed("payroll"):
-        PayrollGeneralSetting = get_horilla_model_class(
+        PayrollGeneralSetting = get_ems_model_class(
             app_label="payroll", model="payrollgeneralsetting"
         )
         first = PayrollGeneralSetting.objects.first()
@@ -181,7 +181,7 @@ def check_candidate_self_tracking(request):
 
     candidate_self_tracking = False
     if apps.is_installed("recruitment"):
-        RecruitmentGeneralSetting = get_horilla_model_class(
+        RecruitmentGeneralSetting = get_ems_model_class(
             app_label="recruitment", model="recruitmentgeneralsetting"
         )
         first = RecruitmentGeneralSetting.objects.first()
@@ -198,7 +198,7 @@ def check_candidate_self_tracking_rating(request):
     """
     rating_option = False
     if apps.is_installed("recruitment"):
-        RecruitmentGeneralSetting = get_horilla_model_class(
+        RecruitmentGeneralSetting = get_ems_model_class(
             app_label="recruitment", model="recruitmentgeneralsetting"
         )
         first = RecruitmentGeneralSetting.objects.first()

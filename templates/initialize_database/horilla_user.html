@@ -11,6 +11,7 @@
             sizes="180x180"
             href="
 
+
                     {% if white_label_company.icon %}{{ white_label_company.icon.url }} {% else %}{% static 'favicons/apple-touch-icon.png' %}{% endif %}"
     />
     <link
@@ -19,6 +20,7 @@
             sizes="32x32"
             href="
 
+
                     {% if white_label_company.icon %}{{ white_label_company.icon.url }} {% else %}{% static 'favicons/favicon-32x32.png' %}{% endif %}"
     />
     <link
@@ -26,6 +28,7 @@
             type="image/png"
             sizes="16x16"
             href="
+
 
                     {% if white_label_company.icon %}{{ white_label_company.icon.url }} {% else %}{% static 'favicons/favicon-16x16.png' %}{% endif %}"
     />
@@ -103,7 +106,7 @@
                 {% trans "Database Authentication" %}
             </h1>
             <p class="text-muted text-center">
-                {% trans "Authenticate with your password to initialize the Horilla HRMS database." %}
+                {% trans "Authenticate with your password to initialize the Ems HRMS database." %}
             </p>
             <form
                     hx-post="{% url 'initialize-database' %}"
@@ -158,7 +161,7 @@
             </form>
         </div>
         {#        <img src={% if white_label_company.icon %} "{{ white_label_company.icon.url }}" {% else %} "#}
-        {#            {% static 'images/ui/auth-logo.png' %}" {% endif %} alt="Horilla" />#}
+        {#            {% static 'images/ui/auth-logo.png' %}" {% endif %} alt="Ems" />#}
     </main>
 </div>
 <script src="{% static '/build/js/web.frontend.min.js' %}"></script>

@@ -10,8 +10,8 @@ from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
 from employee.models import Employee
-from ems.filters import HorillaFilterSet
-from ems.horilla_middlewares import _thread_locals
+from ems.filters import EmsFilterSet
+from ems.ems_middlewares import _thread_locals
 
 
 def _filter_form_structured(self):
@@ -27,7 +27,7 @@ def _filter_form_structured(self):
     return table_html
 
 
-class AccessibilityFilter(HorillaFilterSet):
+class AccessibilityFilter(EmsFilterSet):
     """
     Accessibility Filter with dynamic OR logic between fields
     """

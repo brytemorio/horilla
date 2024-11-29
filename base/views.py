@@ -130,7 +130,7 @@ from base.models import (
     EmployeeShiftSchedule,
     EmployeeType,
     Holidays,
-    HorillaMailTemplate,
+    EmsMailTemplate,
     JobPosition,
     JobRole,
     MultipleApprovalCondition,
@@ -162,12 +162,12 @@ from ems.decorators import (
     permission_required,
 )
 from ems.group_by import group_by_queryset
-from ems.horilla_settings import (
+from ems.ems_settings import (
     DB_INIT_PASSWORD,
     DYNAMIC_URL_PATTERNS,
     FILE_STORAGE,
 )
-from ems.methods import get_horilla_model_class, remove_dynamic_url
+from ems.methods import get_ems_model_class, remove_dynamic_url
 from ems_audit.forms import HistoryTrackingFieldsForm
 from ems_audit.models import AccountBlockUnblock, AuditTag, HistoryTrackingFields
 from notifications.models import Notification
@@ -281,7 +281,7 @@ def initialize_database(request):
     if initialize_database_condition():
         if request.method == "POST":
             password = request._post.get("password")
-            from ems.horilla_settings import DB_INIT_PASSWORD as db_password
+            from ems.ems_settings import DB_INIT_PASSWORD as db_password
 
             if db_password == password:
                 return redirect(initialize_database_user)
@@ -291,7 +291,7 @@ def initialize_database(request):
                     _("The password you entered is incorrect. Please try again."),
                 )
                 return HttpResponse("<script>window.location.reload()</script>")
-        return render(request, "initialize_database/horilla_user.html")
+        return render(request, "initialize_database/ems_user.html")
     else:
         return redirect("/")
 
@@ -313,7 +313,7 @@ def initialize_database_user(request):
         password = form_data.get("password")
         confirm_password = form_data.get("confirm_password")
         if password != confirm_password:
-            return render(request, "initialize_database/horilla_user_signup.html")
+            return render(request, "initialize_database/ems_user_signup.html")
         first_name = form_data.get("firstname")
         last_name = form_data.get("lastname")
         badge_id = form_data.get("badge_id")
@@ -337,10 +337,10 @@ def initialize_database_user(request):
         login(request, user)
         return render(
             request,
-            "initialize_database/horilla_company.html",
+            "initialize_database/ems_company.html",
             {"form": CompanyForm(initial={"hq": True})},
         )
-    return render(request, "initialize_database/horilla_user_signup.html")
+    return render(request, "initialize_database/ems_user_signup.html")
 
 
 @hx_request_required
@@ -367,10 +367,10 @@ def initialize_database_company(request):
                 pass
             return render(
                 request,
-                "initialize_database/horilla_department.html",
+                "initialize_database/ems_department.html",
                 {"form": DepartmentForm(initial={"company_id": company})},
             )
-    return render(request, "initialize_database/horilla_company.html", {"form": form})
+    return render(request, "initialize_database/ems_company.html", {"form": form})
 
 
 @hx_request_required
@@ -394,7 +394,7 @@ def initialize_database_department(request):
             form = DepartmentForm(initial={"company_id": company})
     return render(
         request,
-        "initialize_database/horilla_department_form.html",
+        "initialize_database/ems_department_form.html",
         {"form": form, "departments": departments},
     )
 
@@ -420,7 +420,7 @@ def initialize_department_edit(request, obj_id):
             form.save()
             return render(
                 request,
-                "initialize_database/horilla_department_form.html",
+                "initialize_database/ems_department_form.html",
                 {
                     "form": DepartmentForm(initial={"company_id": company}),
                     "departments": Department.objects.all(),
@@ -428,7 +428,7 @@ def initialize_department_edit(request, obj_id):
             )
     return render(
         request,
-        "initialize_database/horilla_department_form.html",
+        "initialize_database/ems_department_form.html",
         {
             "form": form,
             "department": department,
@@ -474,7 +474,7 @@ def initialize_database_job_position(request):
             form = JobPositionMultiForm(initial={"company_id": Company.objects.first()})
         return render(
             request,
-            "initialize_database/horilla_job_position_form.html",
+            "initialize_database/ems_job_position_form.html",
             {
                 "form": form,
                 "job_positions": JobPosition.objects.all(),
@@ -483,7 +483,7 @@ def initialize_database_job_position(request):
         )
     return render(
         request,
-        "initialize_database/horilla_job_position.html",
+        "initialize_database/ems_job_position.html",
         {"form": form, "job_positions": JobPosition.objects.all(), "company": company},
     )
 
@@ -509,7 +509,7 @@ def initialize_job_position_edit(request, obj_id):
             form.save()
             return render(
                 request,
-                "initialize_database/horilla_job_position_form.html",
+                "initialize_database/ems_job_position_form.html",
                 {
                     "form": JobPositionMultiForm(initial={"company_id": company}),
                     "job_positions": JobPosition.objects.all(),
@@ -518,7 +518,7 @@ def initialize_job_position_edit(request, obj_id):
             )
     return render(
         request,
-        "initialize_database/horilla_job_position_form.html",
+        "initialize_database/ems_job_position_form.html",
         {
             "form": form,
             "job_position": job_position,
@@ -545,7 +545,7 @@ def initialize_job_position_delete(request, obj_id):
     job_position.delete() if job_position else None
     return render(
         request,
-        "initialize_database/horilla_job_position_form.html",
+        "initialize_database/ems_job_position_form.html",
         {
             "form": JobPositionMultiForm(
                 initial={"company_id": Company.objects.first()}
@@ -621,9 +621,9 @@ def reset_send_success(request):
     return render(request, "reset_send.html")
 
 
-class HorillaPasswordResetView(PasswordResetView):
+class EmsPasswordResetView(PasswordResetView):
     """
-    Horilla View for Reset Password
+    Ems View for Reset Password
     """
 
     template_name = "forgot_password.html"
@@ -669,7 +669,7 @@ class HorillaPasswordResetView(PasswordResetView):
 
 class EmployeePasswordResetView(PasswordResetView):
     """
-    Horilla View for Employee Reset Password
+    Ems View for Employee Reset Password
     """
 
     template_name = "forgot_password.html"
@@ -1240,7 +1240,7 @@ def object_delete(request, obj_id, **kwargs):
         ),
 
     if apps.is_installed("pms") and redirect_path == "/pms/filter-key-result/":
-        KeyResult = get_horilla_model_class(app_label="pms", model="keyresult")
+        KeyResult = get_ems_model_class(app_label="pms", model="keyresult")
         key_results = KeyResult.objects.all()
         if key_results.exists():
             previous_data = request.GET.urlencode()
@@ -1416,7 +1416,7 @@ def mail_server_test_email(request):
         form = DynamicMailTestForm(request.POST)
         if form.is_valid():
             email_to = form.cleaned_data["to_email"]
-            subject = _("Test mail from Horilla")
+            subject = _("Test mail from Ems")
 
             # HTML content
             html_content = """
@@ -1425,20 +1425,20 @@ def mail_server_test_email(request):
                     <table align="center" width="600" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden;">
                         <tr>
                             <td align="center" bgcolor="#4CAF50" style="padding: 20px 0;">
-                                <h1 style="color: #ffffff; margin: 0;">Horilla</h1>
+                                <h1 style="color: #ffffff; margin: 0;">Ems</h1>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding: 20px;">
                                 <h3 style="color: #4CAF50;">Email tested successfully</h3>
                                 <b><p style="font-size: 14px;">Hi,<br>
-                                    This email is being sent as part of mail sever testing from Horilla.</p></b>
+                                    This email is being sent as part of mail sever testing from Ems.</p></b>
                                 <img src="cid:unique_image_id" alt="Test Image" style="width: 200px; height: auto; margin: 20px 0;">
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#f0f0f0" style="padding: 10px; text-align: center;">
-                                <p style="font-size: 12px; color: black;">&copy; 2024 Horilla, Inc.</p>
+                                <p style="font-size: 12px; color: black;">&copy; 2024 Ems, Inc.</p>
                             </td>
                         </tr>
                     </table>
@@ -1559,12 +1559,12 @@ def mail_server_create_or_update(request):
 
 
 @login_required
-@permission_required("base.view_horillamailtemplate")
+@permission_required("base.view_emsmailtemplate")
 def view_mail_templates(request):
     """
     This method will render template to disply the offerletter templates
     """
-    templates = HorillaMailTemplate.objects.all()
+    templates = EmsMailTemplate.objects.all()
     form = MailTemplateForm()
     if templates.exists():
         template = "mail/view_templates.html"
@@ -1580,12 +1580,12 @@ def view_mail_templates(request):
 
 @login_required
 @hx_request_required
-@permission_required("base.change_horillamailtemplate")
+@permission_required("base.change_emsmailtemplate")
 def view_mail_template(request, obj_id):
     """
     This method is used to display the template/form to edit
     """
-    template = HorillaMailTemplate.objects.get(id=obj_id)
+    template = EmsMailTemplate.objects.get(id=obj_id)
     form = MailTemplateForm(instance=template)
     searchWords = form.get_template_language()
     if request.method == "POST":
@@ -1604,7 +1604,7 @@ def view_mail_template(request, obj_id):
 
 @login_required
 @require_http_methods(["POST"])
-@permission_required("base.add_horillamailtemplate")
+@permission_required("base.add_emsmailtemplate")
 def create_mail_templates(request):
     """
     This method is used to create offerletter template
@@ -1620,10 +1620,10 @@ def create_mail_templates(request):
 
 
 @login_required
-@permission_required("base.delete_horillamailtemplate")
+@permission_required("base.delete_emsmailtemplate")
 def delete_mail_templates(request):
     ids = request.GET.getlist("ids")
-    result = HorillaMailTemplate.objects.filter(id__in=ids).delete()
+    result = EmsMailTemplate.objects.filter(id__in=ids).delete()
     messages.success(request, "Template deleted")
     return redirect(view_mail_templates)
 
@@ -2500,7 +2500,7 @@ def employee_shift_view(request):
 
     shifts = EmployeeShift.objects.all()
     if apps.is_installed("attendance"):
-        GraceTime = get_horilla_model_class(app_label="attendance", model="gracetime")
+        GraceTime = get_ems_model_class(app_label="attendance", model="gracetime")
         grace_times = GraceTime.objects.all().exclude(is_default=True)
     else:
         grace_times = None
@@ -3120,7 +3120,7 @@ def employee_permission_assign(request):
         ).distinct()
         context["show_assign"] = True
     permissions = []
-    horilla_apps = [
+    ems_apps = [
         "base",
         "recruitment",
         "employee",
@@ -3135,7 +3135,7 @@ def employee_permission_assign(request):
         "ems_documents",
         "helpdesk",
     ]
-    installed_apps = [app for app in settings.INSTALLED_APPS if app in horilla_apps]
+    installed_apps = [app for app in settings.INSTALLED_APPS if app in ems_apps]
     for app_name in installed_apps:
         app_models = []
         for model in get_models_in_app(app_name):
@@ -4883,10 +4883,10 @@ def general_settings(request):
     This method is used to render settings template
     """
     if apps.is_installed("payroll"):
-        PayrollSettings = get_horilla_model_class(
+        PayrollSettings = get_ems_model_class(
             app_label="payroll", model="payrollsettings"
         )
-        EncashmentGeneralSettings = get_horilla_model_class(
+        EncashmentGeneralSettings = get_ems_model_class(
             app_label="payroll", model="encashmentgeneralsettings"
         )
         from payroll.forms.component_forms import PayrollSettingsForm
@@ -6344,7 +6344,7 @@ def activate_biometric_attendance(request):
 
 
 @login_required
-def get_horilla_installed_apps(request):
+def get_ems_installed_apps(request):
     installed_apps = settings.INSTALLED_APPS
     return JsonResponse({"installed_apps": installed_apps})
 

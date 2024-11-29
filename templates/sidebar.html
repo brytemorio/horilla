@@ -1,4 +1,4 @@
-{% load static %} {% load i18n %} {% load horillafilters %}
+{% load static %} {% load i18n %} {% load emsfilters %}
 {% load basefilters %}
 <script>
     function activeNav(id) {
@@ -239,7 +239,7 @@
                                     >
                                 </li>
                             {% endif %}
-                            {% if perms.base.view_horillamailtemplate %}
+                            {% if perms.base.view_emsmailtemplate %}
                                 <li class="oh-sidebar__submenu-item">
                                     <a
                                             class="oh-sidebar__submenu-link"
@@ -249,7 +249,7 @@
                                     >
                                 </li>
                             {% endif %}
-                            {% if "ems_automations"|app_installed and perms.horilla_automations.view_mailautomation %}
+                            {% if "ems_automations"|app_installed and perms.ems_automations.view_mailautomation %}
                                 <li class="oh-sidebar__submenu-item">
                                     <a
                                             class="oh-sidebar__submenu-link"

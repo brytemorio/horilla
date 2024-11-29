@@ -19,7 +19,7 @@ from base.models import (
     WorkType,
     WorkTypeRequest,
 )
-from ems import horilla_middlewares
+from ems import ems_middlewares
 
 
 class CompanySerializer(serializers.ModelSerializer):
@@ -336,7 +336,7 @@ class WorkTypeRequestSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def validate(self, attrs):
-        request = getattr(horilla_middlewares._thread_locals, "request", None)
+        request = getattr(ems_middlewares._thread_locals, "request", None)
         # Check if the user is not a superuser
         requested_date = attrs.get("requested_date", None)
 

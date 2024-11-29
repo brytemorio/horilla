@@ -16,9 +16,9 @@ from ems_views.generic.cbv import views
 
 @method_decorator(login_required, name="dispatch")
 @method_decorator(
-    permission_required("horilla_automation.view_mailautomation"), name="dispatch"
+    permission_required("ems_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationSectionView(views.HorillaSectionView):
+class AutomationSectionView(views.EmsSectionView):
     """
     AutomationSectionView
     """
@@ -31,14 +31,14 @@ class AutomationSectionView(views.HorillaSectionView):
         "/automation/automation.js",
     ]
 
-    template_name = "horilla_automations/section_view.html"
+    template_name = "ems_automations/section_view.html"
 
 
 @method_decorator(login_required, name="dispatch")
 @method_decorator(
-    permission_required("horilla_automation.view_mailautomation"), name="dispatch"
+    permission_required("ems_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationNavView(views.HorillaNavView):
+class AutomationNavView(views.EmsNavView):
     """
     AutomationNavView
     """
@@ -59,9 +59,9 @@ class AutomationNavView(views.HorillaNavView):
 
 @method_decorator(login_required, name="dispatch")
 @method_decorator(
-    permission_required("horilla_automation.change_mailautomation"), name="dispatch"
+    permission_required("ems_automation.change_mailautomation"), name="dispatch"
 )
-class AutomationFormView(views.HorillaFormView):
+class AutomationFormView(views.EmsFormView):
     """
     AutomationFormView
     """
@@ -69,7 +69,7 @@ class AutomationFormView(views.HorillaFormView):
     form_class = AutomationForm
     model = models.MailAutomation
     new_display_title = _trans("New Automation")
-    template_name = "horilla_automations/automation_form.html"
+    template_name = "ems_automations/automation_form.html"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -92,9 +92,9 @@ class AutomationFormView(views.HorillaFormView):
 
 @method_decorator(login_required, name="dispatch")
 @method_decorator(
-    permission_required("horilla_automation.view_mailautomation"), name="dispatch"
+    permission_required("ems_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationListView(views.HorillaListView):
+class AutomationListView(views.EmsListView):
     """
     AutomationListView
     """
@@ -144,9 +144,9 @@ class AutomationListView(views.HorillaListView):
 
 @method_decorator(login_required, name="dispatch")
 @method_decorator(
-    permission_required("horilla_automation.view_mailautomation"), name="dispatch"
+    permission_required("ems_automation.view_mailautomation"), name="dispatch"
 )
-class AutomationDetailedView(views.HorillaDetailedView):
+class AutomationDetailedView(views.EmsDetailedView):
     """
     AutomationDetailedView
     """

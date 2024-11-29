@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 from ems_views import models
 from ems_views.cbv_methods import get_short_uuid, login_required
 from ems_views.forms import SavedFilterForm
-from ems_views.generic.cbv.views import HorillaFormView
+from ems_views.generic.cbv.views import EmsFormView
 
 # Create your views here.
 
@@ -66,7 +66,7 @@ class ReloadField(View):
         parent_form = getattr(module, class_name)()
 
         dynamic_cache = CACHE.get(request.session.session_key + "cbv" + reload_field)
-        model: models.HorillaModel = dynamic_cache["model"]
+        model: models.EmsModel = dynamic_cache["model"]
 
         cache_field = dynamic_cache["dynamic_field"]
         if cache_field != reload_field:
@@ -152,7 +152,7 @@ class ActiveGroup(View):
 
 
 @method_decorator(login_required, name="dispatch")
-class SavedFilter(HorillaFormView):
+class SavedFilter(EmsFormView):
     """
     SavedFilter
     """

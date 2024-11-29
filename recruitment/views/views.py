@@ -44,7 +44,7 @@ from base.context_processors import check_candidate_self_tracking
 from base.countries import country_arr, s_a, states
 from base.forms import MailTemplateForm
 from base.methods import export_data, generate_pdf, get_key_instances, sortby
-from base.models import EmailLog, HorillaMailTemplate, JobPosition
+from base.models import EmailLog, EmsMailTemplate, JobPosition
 from employee.models import Employee, EmployeeWorkInformation
 from ems import settings
 from ems.decorators import (
@@ -1725,7 +1725,7 @@ def form_send_mail(request, cand_id=None):
     else:
         stage_id = None
 
-    templates = HorillaMailTemplate.objects.all()
+    templates = EmsMailTemplate.objects.all()
     return render(
         request,
         "pipeline/pipeline_components/send_mail.html",
@@ -1936,7 +1936,7 @@ def send_acknowledgement(request):
     template_attachment_ids = request.POST.getlist("template_attachments")
     for candidate in candidates:
         bodys = list(
-            HorillaMailTemplate.objects.filter(
+            EmsMailTemplate.objects.filter(
                 id__in=template_attachment_ids
             ).values_list("body", flat=True)
         )

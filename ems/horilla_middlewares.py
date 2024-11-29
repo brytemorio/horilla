@@ -1,5 +1,5 @@
 """
-horilla_middlewares.py
+ems_middlewares.py
 
 This module is used to register ems's middlewares without affecting the ems/settings.py
 """
@@ -12,8 +12,8 @@ from django.shortcuts import render
 from ems.settings import MIDDLEWARE
 
 MIDDLEWARE.append("base.middleware.CompanyMiddleware")
-MIDDLEWARE.append("ems.horilla_middlewares.MethodNotAllowedMiddleware")
-MIDDLEWARE.append("ems.horilla_middlewares.ThreadLocalMiddleware")
+MIDDLEWARE.append("ems.ems_middlewares.MethodNotAllowedMiddleware")
+MIDDLEWARE.append("ems.ems_middlewares.ThreadLocalMiddleware")
 MIDDLEWARE.append("accessibility.middlewares.AccessibilityMiddleware")
 _thread_locals = threading.local()
 

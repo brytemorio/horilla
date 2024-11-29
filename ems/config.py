@@ -1,7 +1,7 @@
 """
 ems/config.py
 
-Horilla app configurations
+Ems app configurations
 """
 
 import importlib
@@ -11,7 +11,7 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib.auth.context_processors import PermWrapper
 
-from ems.horilla_apps import SIDEBARS
+from ems.ems_apps import SIDEBARS
 
 logger = logging.getLogger(__name__)
 

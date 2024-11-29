@@ -31,7 +31,7 @@ from django.utils.safestring import SafeString
 from django.utils.translation import gettext_lazy as _trans
 
 from ems import settings
-from ems.horilla_middlewares import _thread_locals
+from ems.ems_middlewares import _thread_locals
 from ems_views.templatetags.generic_template_filters import getattribute
 
 FIELD_WIDGET_MAP = {

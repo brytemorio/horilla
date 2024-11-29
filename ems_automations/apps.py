@@ -3,7 +3,7 @@ from django.apps import AppConfig
 from ems_automations.signals import start_automation
 
 
-class HorillaAutomationConfig(AppConfig):
+class EmsAutomationConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "ems_automations"
 
@@ -11,7 +11,7 @@ class HorillaAutomationConfig(AppConfig):
         ready = super().ready()
         try:
 
-            from base.templatetags.horillafilters import app_installed
+            from base.templatetags.emsfilters import app_installed
             from employee.models import Employee
             from ems_automations.methods.methods import get_related_models
             from ems_automations.models import MODEL_CHOICES

@@ -1,10 +1,10 @@
 """
-This module defines the configuration for the 'attendance' app within the Horilla HRMS project.
+This module defines the configuration for the 'attendance' app within the Ems HRMS project.
 """
 
 from django.apps import AppConfig
 
-from ems.horilla_settings import APP_URLS
+from ems.ems_settings import APP_URLS
 
 
 class AttendanceConfig(AppConfig):

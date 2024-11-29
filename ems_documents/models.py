@@ -8,9 +8,9 @@ from django.dispatch import receiver
 from django.forms import ValidationError
 from django.utils.translation import gettext as _
 
-from base.horilla_company_manager import HorillaCompanyManager
+from base.ems_company_manager import EmsCompanyManager
 from employee.models import Employee
-from ems.models import HorillaModel
+from ems.models import EmsModel
 
 STATUS = [
     ("requested", "Requested"),
@@ -41,13 +41,13 @@ def document_create(instance):
         document[0].save()
 
 
-class DocumentRequest(HorillaModel):
+class DocumentRequest(EmsModel):
     title = models.CharField(max_length=100)
     employee_id = models.ManyToManyField(Employee)
     format = models.CharField(choices=FORMATS, max_length=10)
     max_size = models.IntegerField(blank=True, null=True)
     description = models.TextField(blank=True, null=True, max_length=255)
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 
@@ -69,7 +69,7 @@ def your_model_m2m_changed(sender, instance, action, **kwargs):
         document_create(instance)
 
 
-class Document(HorillaModel):
+class Document(EmsModel):
     title = models.CharField(max_length=250)
     employee_id = models.ForeignKey(Employee, on_delete=models.PROTECT)
     document_request_id = models.ForeignKey(
@@ -81,7 +81,7 @@ class Document(HorillaModel):
     expiry_date = models.DateField(null=True, blank=True)
     notify_before = models.IntegerField(default=1, null=True)
     is_digital_asset = models.BooleanField(default=False)
-    objects = HorillaCompanyManager(
+    objects = EmsCompanyManager(
         related_company_field="employee_id__employee_work_info__company_id"
     )
 

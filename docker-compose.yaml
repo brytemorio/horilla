@@ -26,10 +26,10 @@ services:
     volumes:
       - ems-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  horilla-data:
+  ems-data:

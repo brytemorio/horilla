@@ -18,7 +18,7 @@ from simple_history.signals import (  # pre_create_historical_m2m_records,; post
 )
 
 # from employee.models import Employee
-from ems.models import HorillaModel
+from ems.models import EmsModel
 from ems_audit.methods import remove_duplicate_history
 
 # Create your models here.
@@ -43,9 +43,9 @@ class AuditTag(models.Model):
         app_label = "ems_audit"
 
 
-class HorillaAuditInfo(models.Model):
+class EmsAuditInfo(models.Model):
     """
-    HorillaAuditInfo model to store additional info
+    EmsAuditInfo model to store additional info
     """
 
     history_title = models.CharField(max_length=20, null=True, blank=True)
@@ -62,14 +62,14 @@ class HorillaAuditInfo(models.Model):
         abstract = True
 
 
-class HorillaAuditLog(HistoricalRecords):
+class EmsAuditLog(HistoricalRecords):
     """
     Model to store additional information for historical records.
     """
 
     # def __init__(self, *args, bases=None, **kwargs):
-    #     super(HorillaAuditLog, self).__init__(*args, **kwargs)
-    #     self.is_horilla_audit_log = True
+    #     super(EmsAuditLog, self).__init__(*args, **kwargs)
+    #     self.is_ems_audit_log = True
 
     pass
 
@@ -77,7 +77,7 @@ class HorillaAuditLog(HistoricalRecords):
 
 
 @receiver(pre_create_historical_record)
-def pre_create_horilla_audit_log(sender, instance, *args, **kwargs):
+def pre_create_ems_audit_log(sender, instance, *args, **kwargs):
     """
     Pre create horill audit log method
     """
@@ -100,7 +100,7 @@ def pre_create_horilla_audit_log(sender, instance, *args, **kwargs):
 
 
 @receiver(post_create_historical_record)
-def post_create_horilla_audit_log(sender, instance, *_args, **kwargs):
+def post_create_ems_audit_log(sender, instance, *_args, **kwargs):
     """
     Post create horill audit log method
     """
@@ -109,7 +109,7 @@ def post_create_horilla_audit_log(sender, instance, *_args, **kwargs):
         history_instance.history_tags.set(
             HistoricalRecords.thread.request.POST.getlist("history_tags")
         )
-        if isinstance(history_instance, HorillaAuditLog):
+        if isinstance(history_instance, EmsAuditLog):
             history_instance.history_title = "Demo Title"
             remove_duplicate_history(instance)
             if instance.skip_history:
@@ -119,11 +119,11 @@ def post_create_horilla_audit_log(sender, instance, *_args, **kwargs):
         pass
 
 
-class HistoryTrackingFields(HorillaModel):
+class HistoryTrackingFields(EmsModel):
     tracking_fields = models.JSONField(null=True, blank=True, editable=False)
     work_info_track = models.BooleanField(default=True)
 
 
-class AccountBlockUnblock(HorillaModel):
+class AccountBlockUnblock(EmsModel):
     is_enabled = models.BooleanField(default=False, null=True, blank=True)
     objects = models.Manager()

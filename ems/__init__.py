@@ -4,9 +4,9 @@ init.py
 
 from ems import (
     haystack_configuration,
-    horilla_apps,
-    horilla_context_processors,
-    horilla_middlewares,
-    horilla_settings,
+    ems_apps,
+    ems_context_processors,
+    ems_middlewares,
+    ems_settings,
     rest_conf,
 )

@@ -6,8 +6,8 @@ from base.methods import reload_queryset
 from employee.filters import EmployeeFilter
 from employee.models import Employee
 from ems_documents.models import Document, DocumentRequest
-from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
-from ems_widgets.widgets.select_widgets import HorillaMultiSelectWidget
+from ems_widgets.widgets.ems_multi_select_field import EmsMultiSelectField
+from ems_widgets.widgets.select_widgets import EmsMultiSelectWidget
 
 
 class DocumentRequestForm(ModelForm):
@@ -20,7 +20,7 @@ class DocumentRequestForm(ModelForm):
 
     def clean(self):
         for field_name, field_instance in self.fields.items():
-            if isinstance(field_instance, HorillaMultiSelectField):
+            if isinstance(field_instance, EmsMultiSelectField):
                 self.errors.pop(field_name, None)
                 if len(self.data.getlist(field_name)) < 1:
                     raise forms.ValidationError({field_name: "Thif field is required"})
@@ -34,9 +34,9 @@ class DocumentRequestForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["employee_id"] = HorillaMultiSelectField(
+        self.fields["employee_id"] = EmsMultiSelectField(
             queryset=Employee.objects.all(),
-            widget=HorillaMultiSelectWidget(
+            widget=EmsMultiSelectWidget(
                 filter_route_name="employee-widget-filter",
                 filter_class=EmployeeFilter,
                 filter_instance_contex_name="f",

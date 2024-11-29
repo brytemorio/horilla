@@ -1,5 +1,5 @@
 """
-horilla/config.py
+ems/config.py
 
 Horilla app configurations
 """
@@ -11,7 +11,7 @@ from django.apps import apps
 from django.conf import settings
 from django.contrib.auth.context_processors import PermWrapper
 
-from horilla.horilla_apps import SIDEBARS
+from ems.horilla_apps import SIDEBARS
 
 logger = logging.getLogger(__name__)
 

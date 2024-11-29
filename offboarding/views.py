@@ -14,14 +14,14 @@ from base.context_processors import intial_notice_period
 from base.methods import closest_numbers, sortby
 from base.views import paginator_qry
 from employee.models import Employee
-from horilla.decorators import (
+from ems.decorators import (
     hx_request_required,
     login_required,
     manager_can_enter,
     permission_required,
 )
-from horilla.group_by import group_by_queryset as group_by
-from horilla.methods import get_horilla_model_class
+from ems.group_by import group_by_queryset as group_by
+from ems.methods import get_horilla_model_class
 from notifications.signals import notify
 from offboarding.decorators import (
     any_manager_can_enter,

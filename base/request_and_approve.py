@@ -13,7 +13,7 @@ from django.shortcuts import render
 
 from base.methods import filtersubordinates
 from base.models import ShiftRequest, WorkTypeRequest
-from horilla.decorators import login_required
+from ems.decorators import login_required
 
 
 def paginator_qry(qryset, page_number):

@@ -60,17 +60,17 @@ from base.methods import (
 from base.models import Company
 from base.views import paginator_qry
 from employee.models import Employee, EmployeeWorkInformation
-from horilla import settings
-from horilla.decorators import (
+from ems import settings
+from ems.decorators import (
     hx_request_required,
     login_required,
     manager_can_enter,
     owner_can_enter,
     permission_required,
 )
-from horilla.group_by import group_by_queryset
-from horilla.horilla_settings import HORILLA_DATE_FORMATS
-from horilla.methods import horilla_users_with_perms
+from ems.group_by import group_by_queryset
+from ems.horilla_settings import HORILLA_DATE_FORMATS
+from ems.methods import horilla_users_with_perms
 from notifications.signals import notify
 
 

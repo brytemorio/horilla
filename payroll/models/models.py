@@ -31,8 +31,8 @@ from base.models import (
 )
 from employee.methods.duration_methods import strtime_seconds
 from employee.models import BonusPoint, Employee, EmployeeWorkInformation
-from horilla import horilla_middlewares
-from horilla.models import HorillaModel
+from ems import horilla_middlewares
+from ems.models import HorillaModel
 from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 logger = logging.getLogger(__name__)

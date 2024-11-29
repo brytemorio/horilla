@@ -43,14 +43,14 @@ from base.methods import (
 )
 from base.models import HorillaMailTemplate, JobPosition
 from employee.models import Employee, EmployeeBankDetails, EmployeeWorkInformation
-from horilla import settings
-from horilla.decorators import (
+from ems import settings
+from ems.decorators import (
     hx_request_required,
     logger,
     login_required,
     permission_required,
 )
-from horilla.group_by import group_by_queryset as general_group_by
+from ems.group_by import group_by_queryset as general_group_by
 from notifications.signals import notify
 from onboarding.decorators import (
     all_manager_can_enter,

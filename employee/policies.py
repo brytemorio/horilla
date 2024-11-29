@@ -26,7 +26,7 @@ from employee.models import (
     Policy,
     PolicyMultipleFile,
 )
-from horilla.decorators import hx_request_required, login_required, permission_required
+from ems.decorators import hx_request_required, login_required, permission_required
 from notifications.signals import notify
 
 

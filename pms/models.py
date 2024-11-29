@@ -15,7 +15,7 @@ from django.utils.translation import gettext_lazy as _
 from base.horilla_company_manager import HorillaCompanyManager
 from base.models import Company, Department, JobPosition
 from employee.models import BonusPoint, Employee
-from horilla.models import HorillaModel
+from ems.models import HorillaModel
 from ems_audit.methods import get_diff
 from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 from ems_automations.methods.methods import get_model_class

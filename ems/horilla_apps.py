@@ -1,11 +1,11 @@
 """
 horilla_apps
 
-This module is used to register horilla addons
+This module is used to register ems addons
 """
 
-from horilla import settings
-from horilla.settings import INSTALLED_APPS
+from ems import settings
+from ems.settings import INSTALLED_APPS
 
 # INSTALLED_APPS.append("accessibility")
 # INSTALLED_APPS.append("ems_audit")

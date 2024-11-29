@@ -1,5 +1,5 @@
 """
-horilla/generic/views.py
+ems/generic/views.py
 """
 
 import json
@@ -19,9 +19,9 @@ from django.utils.translation import gettext_lazy as _trans
 from django.views.generic import DetailView, FormView, ListView, TemplateView
 
 from base.methods import closest_numbers, get_key_instances
-from horilla.filters import FilterSet
-from horilla.group_by import group_by_queryset
-from horilla.horilla_middlewares import _thread_locals
+from ems.filters import FilterSet
+from ems.group_by import group_by_queryset
+from ems.horilla_middlewares import _thread_locals
 from ems_views import models
 from ems_views.cbv_methods import (
     get_short_uuid,
@@ -350,7 +350,7 @@ class HorillaListView(ListView):
                     instance.ordered_ids = ordered_ids
                     ordered_ids.append(instance.pk)
         CACHE.get(self.request.session.session_key + "cbv")[HorillaListView] = context
-        from horilla.urls import path, urlpatterns
+        from ems.urls import path, urlpatterns
 
         self.export_path = f"export-list-view-{get_short_uuid(4)}/"
 
@@ -942,7 +942,7 @@ class HorillaFormView(FormView):
 
                     from django.urls import path
 
-                    from horilla.urls import urlpatterns
+                    from ems.urls import urlpatterns
 
                     urlpatterns.append(
                         path(
@@ -1063,7 +1063,7 @@ class HorillaProfileView(DetailView):
         self.request = request
         update_initial_cache(request, CACHE, HorillaProfileView)
 
-        from horilla.urls import path, urlpatterns
+        from ems.urls import path, urlpatterns
 
         for tab in self.tabs:
             if not tab.get("url"):

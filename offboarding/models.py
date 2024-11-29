@@ -11,10 +11,10 @@ from django.utils.translation import gettext_lazy as _
 from base.horilla_company_manager import HorillaCompanyManager
 from base.models import Company
 from employee.models import Employee
-from horilla import horilla_middlewares
-from horilla.horilla_middlewares import _thread_locals
-from horilla.methods import get_horilla_model_class
-from horilla.models import HorillaModel
+from ems import horilla_middlewares
+from ems.horilla_middlewares import _thread_locals
+from ems.methods import get_horilla_model_class
+from ems.models import HorillaModel
 from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 from notifications.signals import notify
 

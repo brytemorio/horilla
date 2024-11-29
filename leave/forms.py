@@ -23,7 +23,7 @@ from base.models import CompanyLeaves, Holidays
 from employee.filters import EmployeeFilter
 from employee.forms import MultipleFileField
 from employee.models import Employee
-from horilla import horilla_middlewares
+from ems import horilla_middlewares
 from ems_widgets.forms import HorillaForm, HorillaModelForm
 from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
 from ems_widgets.widgets.select_widgets import HorillaMultiSelectWidget

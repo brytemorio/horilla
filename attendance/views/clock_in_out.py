@@ -34,8 +34,8 @@ from base.context_processors import (
     timerunner_enabled,
 )
 from base.models import AttendanceAllowedIP, EmployeeShiftDay
-from horilla.decorators import hx_request_required, login_required
-from horilla.horilla_middlewares import _thread_locals
+from ems.decorators import hx_request_required, login_required
+from ems.horilla_middlewares import _thread_locals
 
 
 def late_come_create(attendance):

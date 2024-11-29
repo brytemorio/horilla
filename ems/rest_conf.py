@@ -4,8 +4,8 @@ rest_conf.py
 
 from datetime import timedelta
 
-from horilla import settings
-from horilla.settings import INSTALLED_APPS
+from ems import settings
+from ems.settings import INSTALLED_APPS
 
 # Injecting installed apps to settings
 

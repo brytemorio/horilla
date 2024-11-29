@@ -25,7 +25,7 @@ from base.methods import (
     reload_queryset,
 )
 from employee.filters import EmployeeFilter
-from horilla import horilla_middlewares
+from ems import horilla_middlewares
 from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
 from ems_widgets.widgets.select_widgets import HorillaMultiSelectWidget
 from pms.models import (

@@ -15,8 +15,8 @@ from django.contrib.auth.context_processors import PermWrapper
 from django.db.models.utils import AltersData
 from django.template.defaultfilters import register
 
-from horilla.config import import_method
-from horilla.horilla_middlewares import _thread_locals
+from ems.config import import_method
+from ems.horilla_middlewares import _thread_locals
 
 register = template.Library()
 

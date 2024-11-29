@@ -30,9 +30,9 @@ from base.models import (
     clear_messages,
 )
 from employee.models import Employee, EmployeeWorkInformation
-from horilla import horilla_middlewares
-from horilla.methods import get_horilla_model_class
-from horilla.models import HorillaModel
+from ems import horilla_middlewares
+from ems.methods import get_horilla_model_class
+from ems.models import HorillaModel
 from ems_audit.methods import get_diff
 from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 from leave.methods import calculate_requested_days

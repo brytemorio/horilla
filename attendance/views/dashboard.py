@@ -34,9 +34,9 @@ from base.methods import filtersubordinates
 from base.models import Department
 from employee.models import Employee
 from employee.not_in_out_dashboard import paginator_qry
-from horilla import settings
-from horilla.decorators import hx_request_required, login_required
-from horilla.methods import get_horilla_model_class
+from ems import settings
+from ems.decorators import hx_request_required, login_required
+from ems.methods import get_horilla_model_class
 
 
 def find_on_time(request, today, week_day, department=None):

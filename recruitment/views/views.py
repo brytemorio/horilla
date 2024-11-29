@@ -46,14 +46,14 @@ from base.forms import MailTemplateForm
 from base.methods import export_data, generate_pdf, get_key_instances, sortby
 from base.models import EmailLog, HorillaMailTemplate, JobPosition
 from employee.models import Employee, EmployeeWorkInformation
-from horilla import settings
-from horilla.decorators import (
+from ems import settings
+from ems.decorators import (
     hx_request_required,
     logger,
     login_required,
     permission_required,
 )
-from horilla.group_by import group_by_queryset
+from ems.group_by import group_by_queryset
 from notifications.signals import notify
 from recruitment.decorators import manager_can_enter, recruitment_manager_can_enter
 from recruitment.filters import (

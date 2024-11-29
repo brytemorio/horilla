@@ -1,5 +1,5 @@
 """
-horilla/cbv_methods.py
+ems/cbv_methods.py
 """
 
 import types
@@ -30,8 +30,8 @@ from django.utils.html import format_html
 from django.utils.safestring import SafeString
 from django.utils.translation import gettext_lazy as _trans
 
-from horilla import settings
-from horilla.horilla_middlewares import _thread_locals
+from ems import settings
+from ems.horilla_middlewares import _thread_locals
 from ems_views.templatetags.generic_template_filters import getattribute
 
 FIELD_WIDGET_MAP = {

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from horilla.decorators import login_required
+from ems.decorators import login_required
 from ems_widgets.widgets.select_widgets import (
     ALL_INSTANCES,
     HorillaMultiSelectWidget,

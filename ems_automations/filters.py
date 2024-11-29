@@ -2,7 +2,7 @@
 ems_automations/filters.py
 """
 
-from horilla.filters import HorillaFilterSet, django_filters
+from ems.filters import HorillaFilterSet, django_filters
 from ems_automations.models import MailAutomation
 
 

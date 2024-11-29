@@ -9,7 +9,7 @@ from base.forms import AnnouncementCommentForm, AnnouncementForm
 from base.methods import filter_own_records
 from base.models import Announcement, AnnouncementComment, AnnouncementView
 from employee.models import Employee
-from horilla.decorators import login_required, permission_required
+from ems.decorators import login_required, permission_required
 from notifications.signals import notify
 
 

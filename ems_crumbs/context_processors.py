@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.urls import Resolver404, path, resolve, reverse
 
 from employee.models import Employee
-from horilla.urls import urlpatterns
+from ems.urls import urlpatterns
 
 
 def is_valid_uuid(uuid_string):

@@ -18,8 +18,8 @@ from django.views.decorators.http import require_http_methods
 
 from base.models import HorillaMailTemplate
 from employee.models import Employee
-from horilla.decorators import login_required, permission_required
-from horilla.group_by import group_by_queryset
+from ems.decorators import login_required, permission_required
+from ems.group_by import group_by_queryset
 from notifications.signals import notify
 from recruitment.decorators import manager_can_enter, recruitment_manager_can_enter
 from recruitment.filters import StageFilter

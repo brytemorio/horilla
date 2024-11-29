@@ -100,7 +100,7 @@ from employee.models import (
     EmployeeWorkInformation,
     NoteFiles,
 )
-from horilla.decorators import (
+from ems.decorators import (
     hx_request_required,
     logger,
     login_required,
@@ -108,10 +108,10 @@ from horilla.decorators import (
     owner_can_enter,
     permission_required,
 )
-from horilla.filters import HorillaPaginator
-from horilla.group_by import group_by_queryset
-from horilla.horilla_settings import HORILLA_DATE_FORMATS
-from horilla.methods import get_horilla_model_class
+from ems.filters import HorillaPaginator
+from ems.group_by import group_by_queryset
+from ems.horilla_settings import HORILLA_DATE_FORMATS
+from ems.methods import get_horilla_model_class
 from ems_audit.models import AccountBlockUnblock, HistoryTrackingFields
 from ems_documents.forms import (
     DocumentForm,

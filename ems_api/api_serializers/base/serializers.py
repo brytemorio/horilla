@@ -19,7 +19,7 @@ from base.models import (
     WorkType,
     WorkTypeRequest,
 )
-from horilla import horilla_middlewares
+from ems import horilla_middlewares
 
 
 class CompanySerializer(serializers.ModelSerializer):

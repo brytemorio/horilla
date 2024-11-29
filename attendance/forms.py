@@ -61,7 +61,7 @@ from base.methods import (
 from base.models import Company, EmployeeShift
 from employee.filters import EmployeeFilter
 from employee.models import Employee
-from horilla import horilla_middlewares
+from ems import horilla_middlewares
 from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
 from ems_widgets.widgets.select_widgets import HorillaMultiSelectWidget
 

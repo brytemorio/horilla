@@ -1,6 +1,6 @@
 from django.core.files.storage import FileSystemStorage
 
-from horilla import settings
+from ems import settings
 
 """
 DB_INIT_PASSWORD: str

@@ -10,7 +10,7 @@ from django.http import QueryDict
 
 from base.templatetags.horillafilters import app_installed
 from employee.models import Employee
-from horilla.models import HorillaModel
+from ems.models import HorillaModel
 from ems_views.templatetags.generic_template_filters import getattribute
 
 recruitment_installed = False

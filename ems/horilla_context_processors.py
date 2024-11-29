@@ -1,13 +1,13 @@
 """
 horilla_context_process.py
 
-This module is used to register context processors without effecting the horilla/settings.py module
+This module is used to register context processors without effecting the ems/settings.py module
 """
 
-from horilla.settings import TEMPLATES
+from ems.settings import TEMPLATES
 
 TEMPLATES[0]["OPTIONS"]["context_processors"].append(
-    "horilla.config.get_MENUS",
+    "ems.config.get_MENUS",
 )
 TEMPLATES[0]["OPTIONS"]["context_processors"].append(
     "base.context_processors.get_companies",

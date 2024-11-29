@@ -11,9 +11,9 @@ from django.urls import path
 from base.models import Company, TrackLateComeEarlyOut
 from base.urls import urlpatterns
 from employee.models import EmployeeGeneralSetting
-from horilla import horilla_apps
-from horilla.decorators import hx_request_required, login_required, permission_required
-from horilla.methods import get_horilla_model_class
+from ems import horilla_apps
+from ems.decorators import hx_request_required, login_required, permission_required
+from ems.methods import get_horilla_model_class
 
 
 class AllCompany:

@@ -59,7 +59,7 @@ from attendance.models import (
 from base.methods import choosesubordinates, filtersubordinates, sortby
 from base.models import Department, EmployeeShiftDay, EmployeeShiftSchedule
 from employee.models import Employee
-from horilla.decorators import (
+from ems.decorators import (
     hx_request_required,
     login_required,
     manager_can_enter,

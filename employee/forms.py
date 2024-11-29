@@ -48,7 +48,7 @@ from employee.models import (
     Policy,
     PolicyMultipleFile,
 )
-from horilla import horilla_middlewares
+from ems import horilla_middlewares
 from ems_audit.models import AccountBlockUnblock
 
 logger = logging.getLogger(__name__)

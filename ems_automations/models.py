@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _trans
 
 from base.models import HorillaMailTemplate
-from horilla.models import HorillaModel
+from ems.models import HorillaModel
 from ems_views.cbv_methods import render_template
 
 MODEL_CHOICES = []

@@ -975,9 +975,9 @@ urlpatterns = [
         name="emp-workinfo-complete",
     ),
     path(
-        "get-horilla-installed-apps/",
+        "get-ems-installed-apps/",
         views.get_horilla_installed_apps,
-        name="get-horilla-installed-apps",
+        name="get-ems-installed-apps",
     ),
     path("configuration/holiday-view", views.holiday_view, name="holiday-view"),
     path(

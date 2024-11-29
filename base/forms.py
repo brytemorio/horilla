@@ -70,9 +70,9 @@ from base.models import (
 from employee.filters import EmployeeFilter
 from employee.forms import MultipleFileField
 from employee.models import Employee
-from horilla import horilla_middlewares
-from horilla.horilla_middlewares import _thread_locals
-from horilla.methods import get_horilla_model_class
+from ems import horilla_middlewares
+from ems.horilla_middlewares import _thread_locals
+from ems.methods import get_horilla_model_class
 from ems_audit.models import AuditTag
 from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
 from ems_widgets.widgets.select_widgets import HorillaMultiSelectWidget

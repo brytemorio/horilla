@@ -37,8 +37,8 @@ from base.forms import Form
 from base.methods import reload_queryset
 from employee.filters import EmployeeFilter
 from employee.models import Employee
-from horilla import horilla_middlewares
-from horilla.horilla_middlewares import _thread_locals
+from ems import horilla_middlewares
+from ems.horilla_middlewares import _thread_locals
 from ems_widgets.widgets.horilla_multi_select_field import HorillaMultiSelectField
 from ems_widgets.widgets.select_widgets import HorillaMultiSelectWidget
 from recruitment import widgets

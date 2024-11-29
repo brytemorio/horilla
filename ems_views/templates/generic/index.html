@@ -20,7 +20,7 @@
     border-right: 1px solid hsl(213,22%,84%) !important;
   }
 </style>
-<div hx-get="{% url "horilla-navbar" %}" hx-trigger="load">
+<div hx-get="{% url "ems-navbar" %}" hx-trigger="load">
 </div>
 {% include "generic/components.html" %}
 <div
@@ -31,7 +31,7 @@
     style="display: none"
   >
 </div>
-  {% comment %} path to the horilla tab view {% endcomment %}
+  {% comment %} path to the ems tab view {% endcomment %}
 <div class="oh-wrapper" hx-get="{% url "htv" %}?{{request.GET.urlencode}}" hx-trigger="load" id="listContainer">
   <div class="animated-background"></div>
 </div>

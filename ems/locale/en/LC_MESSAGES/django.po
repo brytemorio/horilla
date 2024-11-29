@@ -8235,7 +8235,7 @@ msgstr ""
 
 #: base/models.py:600
 msgid ""
-"Time at which the horilla will automatically check out the employee "
+"Time at which the ems will automatically check out the employee "
 "attendance if they forget."
 msgstr ""
 

@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _trans
 
-from horilla.decorators import login_required, permission_required
+from ems.decorators import login_required, permission_required
 from ems_automations import models
 from ems_automations.filters import AutomationFilter
 from ems_automations.forms import AutomationForm

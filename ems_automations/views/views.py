@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 
-from horilla.decorators import login_required, permission_required
+from ems.decorators import login_required, permission_required
 from ems_automations.methods.methods import generate_choices
 from ems_automations.methods.serialize import serialize_form
 from ems_automations.models import MailAutomation

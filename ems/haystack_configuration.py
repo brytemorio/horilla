@@ -1,6 +1,6 @@
 import os
 
-from horilla import settings
+from ems import settings
 
 setattr(
     settings,

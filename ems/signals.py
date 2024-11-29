@@ -1,5 +1,5 @@
 """
-horilla/signals.py
+ems/signals.py
 """
 
 from django.dispatch import Signal

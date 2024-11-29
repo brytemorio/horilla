@@ -35,7 +35,7 @@ from base.methods import (
 )
 from base.models import CompanyLeaves, Holidays, PenaltyAccounts
 from employee.models import Employee
-from horilla.decorators import (
+from ems.decorators import (
     hx_request_required,
     logger,
     login_required,
@@ -43,9 +43,9 @@ from horilla.decorators import (
     owner_can_enter,
     permission_required,
 )
-from horilla.group_by import group_by_queryset
-from horilla.horilla_settings import DYNAMIC_URL_PATTERNS
-from horilla.methods import get_horilla_model_class, remove_dynamic_url
+from ems.group_by import group_by_queryset
+from ems.horilla_settings import DYNAMIC_URL_PATTERNS
+from ems.methods import get_horilla_model_class, remove_dynamic_url
 from leave.decorators import *
 from leave.filters import *
 from leave.forms import *

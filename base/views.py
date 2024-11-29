@@ -153,7 +153,7 @@ from employee.models import (
     Employee,
     EmployeeWorkInformation,
 )
-from horilla.decorators import (
+from ems.decorators import (
     delete_permission,
     duplicate_permission,
     hx_request_required,
@@ -161,13 +161,13 @@ from horilla.decorators import (
     manager_can_enter,
     permission_required,
 )
-from horilla.group_by import group_by_queryset
-from horilla.horilla_settings import (
+from ems.group_by import group_by_queryset
+from ems.horilla_settings import (
     DB_INIT_PASSWORD,
     DYNAMIC_URL_PATTERNS,
     FILE_STORAGE,
 )
-from horilla.methods import get_horilla_model_class, remove_dynamic_url
+from ems.methods import get_horilla_model_class, remove_dynamic_url
 from ems_audit.forms import HistoryTrackingFieldsForm
 from ems_audit.models import AccountBlockUnblock, AuditTag, HistoryTrackingFields
 from notifications.models import Notification
@@ -281,7 +281,7 @@ def initialize_database(request):
     if initialize_database_condition():
         if request.method == "POST":
             password = request._post.get("password")
-            from horilla.horilla_settings import DB_INIT_PASSWORD as db_password
+            from ems.horilla_settings import DB_INIT_PASSWORD as db_password
 
             if db_password == password:
                 return redirect(initialize_database_user)
@@ -1467,7 +1467,7 @@ def mail_server_test_email(request):
 
                 # Attach the image
                 image_path = path.join(
-                    settings.STATIC_ROOT, "images/ui/horilla-logo.png"
+                    settings.STATIC_ROOT, "images/ui/ems-logo.png"
                 )
                 with open(image_path, "rb") as img:
                     msg_img = MIMEImage(img.read())

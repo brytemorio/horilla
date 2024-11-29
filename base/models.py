@@ -19,10 +19,10 @@ from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
 from base.horilla_company_manager import HorillaCompanyManager
-from horilla import horilla_middlewares
-from horilla.horilla_middlewares import _thread_locals
-from horilla.methods import get_horilla_model_class
-from horilla.models import HorillaModel
+from ems import horilla_middlewares
+from ems.horilla_middlewares import _thread_locals
+from ems.methods import get_horilla_model_class
+from ems.models import HorillaModel
 from ems_audit.models import HorillaAuditInfo, HorillaAuditLog
 
 
@@ -604,7 +604,7 @@ class EmployeeShiftSchedule(HorillaModel):
         blank=True,
         verbose_name=_("Automatic Check Out Time"),
         help_text=_(
-            "Time at which the horilla will automatically check out the employee attendance if they forget."
+            "Time at which the ems will automatically check out the employee attendance if they forget."
         ),
     )
     company_id = models.ManyToManyField(Company, blank=True, verbose_name=_("Company"))

@@ -23,7 +23,7 @@ from employee.models import (
     Policy,
 )
 from employee.views import work_info_export, work_info_import
-from horilla.decorators import owner_can_enter
+from ems.decorators import owner_can_enter
 from ems_api.api_decorators.base.decorators import permission_required
 from ems_api.api_methods.employee.methods import get_next_badge_id
 from ems_documents.models import Document, DocumentRequest
